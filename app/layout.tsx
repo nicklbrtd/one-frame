@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans, Roboto_Flex, Sora } from "next/font/google";
 
 import "./globals.css";
 
-const fontSans = Manrope({
+const fontSans = Plus_Jakarta_Sans({
   variable: "--font-manrope",
   subsets: ["latin"],
 });
 
-const fontDisplay = Cormorant_Garamond({
+const fontDisplay = Sora({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
+});
+
+const fontVariableProximity = Roboto_Flex({
+  variable: "--font-variable-proximity",
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
-  title: "One Frame | College Group Showcase",
-  description:
-    "An immersive visual presentation of our college group: personalities, atmosphere, and shared memory.",
+  title: "П9ИВ",
+  description: "Иммерсивная визуальная история группы П9ИВ: характеры, атмосфера и общая память.",
 };
 
 export default function RootLayout({
@@ -26,8 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${fontSans.variable} ${fontDisplay.variable} bg-[#f6f5f2] text-slate-900 antialiased`}>
+    <html lang="ru">
+      <body
+        className={`${fontSans.variable} ${fontDisplay.variable} ${fontVariableProximity.variable} bg-[#05070c] text-white antialiased`}
+      >
         {children}
       </body>
     </html>

@@ -29,7 +29,7 @@ export function SpotlightCard({ children, className, tint = "#b8d0d9", onClick }
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
       className={cn(
-        "group relative overflow-hidden rounded-[28px] border border-white/60 bg-white/70 p-6 shadow-[0_16px_50px_rgba(25,31,40,0.14)] backdrop-blur-sm",
+        "group relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.92),rgba(9,13,20,0.76))] p-6 shadow-[0_22px_70px_rgba(0,0,0,0.34)] backdrop-blur-xl",
         onClick ? "cursor-pointer" : undefined,
         className,
       )}
@@ -45,9 +45,10 @@ export function SpotlightCard({ children, className, tint = "#b8d0d9", onClick }
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--spot-color) 38%, transparent) 0%, transparent 48%)",
+            "radial-gradient(circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--spot-color) 52%, transparent) 0%, transparent 46%)",
         }}
       />
+      <div className="pointer-events-none absolute inset-[1px] rounded-[27px] border border-white/6" />
       <div className="relative z-10">{children}</div>
     </motion.div>
   );

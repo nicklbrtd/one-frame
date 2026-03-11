@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f5f2;
-  --foreground: #1c1f24;
-  --mist: #e9edf0;
-  --accent: #8fb8b2;
-  --accent-alt: #a9c4d6;
+  --background: #05070c;
+  --foreground: #f5f7fb;
+  --mist: #0f141c;
+  --panel: rgba(10, 16, 24, 0.68);
+  --panel-strong: rgba(14, 22, 32, 0.9);
+  --line: rgba(194, 220, 233, 0.16);
+  --accent: #7ad5cf;
+  --accent-alt: #89abd8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-mist: var(--mist);
+  --color-panel: var(--panel);
+  --color-panel-strong: var(--panel-strong);
+  --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-alt: var(--accent-alt);
   --font-sans: var(--font-manrope);
@@ -20,6 +26,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
 }
 
 body {
@@ -28,11 +35,39 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 55%, white);
-  color: #1d252d;
+  background: color-mix(in oklab, var(--accent) 46%, transparent);
+  color: #f9fcff;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(5, 7, 12, 0.12), rgba(5, 7, 12, 0.24)),
+    radial-gradient(circle at 18% 16%, rgba(72, 128, 180, 0.18), transparent 26%),
+    radial-gradient(circle at 82% 22%, rgba(68, 205, 197, 0.15), transparent 24%),
+    radial-gradient(circle at 52% 78%, rgba(126, 101, 214, 0.12), transparent 34%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 92%);
 }
 
 .marquee-left {

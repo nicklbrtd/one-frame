@@ -20,7 +20,7 @@ export function MembersSection() {
   );
 
   return (
-    <SectionShell id="members" eyebrow="People">
+    <SectionShell id="members" eyebrow="Люди">
       <Reveal>
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
@@ -29,16 +29,16 @@ export function MembersSection() {
         {members.map((member) => (
           <StaggerItem key={member.id}>
             <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
-              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/75 font-display text-lg text-slate-700 shadow-[0_8px_20px_rgba(18,22,27,0.11)]">
+              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
                 {member.name.slice(0, 1)}
               </div>
-              <h3 className="font-display text-3xl text-slate-900">{member.name}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">{member.phrase}</p>
+              <h3 className="font-display text-3xl text-white">{member.name}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {member.keywords.map((keyword) => (
                   <span
                     key={keyword}
-                    className="rounded-full border border-slate-300/70 bg-white/70 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-slate-500"
+                    className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
                   >
                     {keyword}
                   </span>
@@ -52,7 +52,7 @@ export function MembersSection() {
       <AnimatePresence>
         {selectedMember ? (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/35 px-5 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/58 px-5 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -63,34 +63,34 @@ export function MembersSection() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 22, scale: 0.97 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full max-w-xl rounded-[30px] border border-white/70 bg-white/87 p-8 shadow-[0_28px_90px_rgba(15,20,27,0.26)]"
+              className="w-full max-w-xl rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(10,16,24,0.94),rgba(10,14,21,0.86))] p-8 shadow-[0_32px_100px_rgba(0,0,0,0.42)]"
               onClick={(event) => event.stopPropagation()}
             >
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Member chapter</p>
-              <h3 className="mt-3 font-display text-5xl text-slate-900">{selectedMember.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-slate-600">{selectedMember.phrase}</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-white/42">Портрет участника</p>
+              <h3 className="mt-3 font-display text-5xl text-white">{selectedMember.name}</h3>
+              <p className="mt-4 text-base leading-relaxed text-white/64">{selectedMember.phrase}</p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {selectedMember.keywords.map((keyword) => (
                   <div
                     key={keyword}
-                    className="rounded-xl border border-slate-200/90 bg-white/75 px-4 py-3 text-sm uppercase tracking-[0.14em] text-slate-500"
+                    className="rounded-xl border border-white/8 bg-white/6 px-4 py-3 text-sm uppercase tracking-[0.14em] text-white/54"
                   >
                     {keyword}
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 rounded-xl border border-slate-200/80 bg-[#eef3f5] px-4 py-3 text-sm text-slate-600">
-                Mood: <span className="font-medium text-slate-800">{selectedMember.mood}</span>
+              <div className="mt-6 rounded-xl border border-[#7ad5cf]/15 bg-[#7ad5cf]/8 px-4 py-3 text-sm text-white/62">
+                Настроение: <span className="font-medium text-white">{selectedMember.mood}</span>
               </div>
 
               <button
                 type="button"
                 onClick={() => setSelectedId(null)}
-                className="mt-7 rounded-full border border-slate-300/80 px-5 py-2 text-xs uppercase tracking-[0.18em] text-slate-600 transition hover:bg-slate-100"
+                className="mt-7 rounded-full border border-white/10 px-5 py-2 text-xs uppercase tracking-[0.18em] text-white/64 transition hover:bg-white/8"
               >
-                Close
+                Закрыть
               </button>
             </motion.div>
           </motion.div>

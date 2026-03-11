@@ -1,28 +1,28 @@
 export const copy = {
   hero: {
-    kicker: "College Group Showcase",
-    title: "One Frame",
+    kicker: "Группа П9ИВ",
+    title: "П9ИВ",
     subtitle:
-      "Different souls, one shared moment. A living composition of faces, moods, and memory.",
+      "Разные характеры, один общий момент. Живая композиция лиц, настроений и памяти.",
   },
   about: {
-    title: "Who We Are",
-    text: "We arrived as separate stories. Somewhere between classes, deadlines, and unexpected laughter, we became a shared rhythm. This space keeps our presence: not only names, but atmosphere.",
+    title: "Кто мы",
+    text: "Мы пришли как отдельные истории. Где-то между парами, дедлайнами и неожиданным смехом мы стали единым ритмом. Это пространство хранит наше присутствие: не только имена, но и атмосферу.",
   },
   members: {
-    title: "Separate Worlds, One Composition",
-    text: "Each person carries a distinct energy. Together, those energies shape the feeling of this year.",
+    title: "Отдельные миры, одна композиция",
+    text: "Каждый человек несет свою энергию. Вместе эти энергии создают ощущение этого года.",
   },
   atmosphere: {
-    title: "Atmosphere",
-    text: "Quiet confidence. Late evenings. Notes in margins. Light on desks. Voices in hallways. A season we will remember by texture, not only by dates.",
+    title: "Атмосфера",
+    text: "Тихая уверенность. Поздние вечера. Пометки на полях. Свет настольных ламп. Голоса в коридорах. Сезон, который мы запомним не только по датам, но и по ощущениям.",
   },
   moments: {
-    title: "Moments",
-    text: "Fragments of ordinary days that became meaningful once they were shared.",
+    title: "Моменты",
+    text: "Фрагменты обычных дней, которые стали важными, когда мы прожили их вместе.",
   },
   finale: {
-    title: "Years will move. This moment will stay.",
-    text: "We were here, together, exactly like this.",
+    title: "Годы пройдут. Этот момент останется.",
+    text: "Мы были здесь, вместе, именно такими.",
   },
 };
