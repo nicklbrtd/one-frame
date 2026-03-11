@@ -1,0 +1,18 @@
+export const moodWords = [
+  "presence",
+  "late lights",
+  "shared silence",
+  "drafts",
+  "momentum",
+  "eye contact",
+  "notes",
+  "laughter",
+  "focus",
+  "memory",
+  "together",
+  "velocity",
+  "confidence",
+  "soft rain",
+  "hallways",
+  "future",
+];
