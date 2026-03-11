@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEvent, ReactNode, useState } from "react";
+import { CSSProperties, MouseEvent, ReactNode, useState } from "react";
 import { motion } from "framer-motion";
 
 import { cn } from "@/lib/cn";
@@ -38,7 +38,7 @@ export function SpotlightCard({ children, className, tint = "#b8d0d9", onClick }
           "--spot-x": `${spotlight.x}%`,
           "--spot-y": `${spotlight.y}%`,
           "--spot-color": tint,
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <div
