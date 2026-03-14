@@ -94,7 +94,15 @@ export function MembersSection() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const loopMembers = useMemo(() => {
-    const active = members.filter((member) => !member.isFormer);
+    const activeSource = members.filter((member) => !member.isFormer);
+    const activePriority = ["nikita", "maksim"];
+    const active: Member[] = [
+      ...activePriority
+        .map((id) => activeSource.find((member) => member.id === id))
+        .filter((member): member is Member => Boolean(member)),
+      ...activeSource.filter((member) => !activePriority.includes(member.id)),
+    ];
+
     const former = members.filter((member) => member.isFormer);
     if (former.length === 0 || active.length === 0) return members;
 
@@ -133,7 +141,7 @@ export function MembersSection() {
           cardHeight: 348,
           rowGap: 20,
           desiredGap: 20,
-          speed: 46,
+          speed: 56,
           minHiddenRunEachSide: 420,
         }
       : {
@@ -149,6 +157,7 @@ export function MembersSection() {
     let animationFrame = 0;
     let previousTimestamp = 0;
     let offset = 0;
+    let hasSeededOffset = false;
 
     const layout = {
       topY: 0,
@@ -179,6 +188,12 @@ export function MembersSection() {
       layout.perimeter = 2 * (layout.horizontalRun + layout.verticalRun);
       layout.spacing = layout.perimeter / loopMembers.length;
       stage.style.height = `${layout.stageHeight}px`;
+
+      if (!hasSeededOffset) {
+        // Start with the first card entering the right edge of the top lane.
+        offset = hiddenRunEachSide;
+        hasSeededOffset = true;
+      }
     };
 
     const pointAt = (distance: number) => {
