@@ -4,7 +4,17 @@ import { useEffect, useRef } from "react";
 
 import styles from "./ThreadsBackground.module.css";
 
-export function ThreadsBackground() {
+type ThreadsBackgroundProps = {
+  amplitude?: number;
+  distance?: number;
+  enableMouseInteraction?: boolean;
+};
+
+export function ThreadsBackground({
+  amplitude = 1,
+  distance = 0,
+  enableMouseInteraction = true,
+}: ThreadsBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -27,6 +37,7 @@ export function ThreadsBackground() {
     let height = 0;
     let dpr = 1;
     const start = performance.now();
+    const pointer = { x: 0, y: 0 };
 
     const resize = () => {
       width = Math.max(window.innerWidth, 1);
@@ -45,14 +56,17 @@ export function ThreadsBackground() {
       context.clearRect(0, 0, width, height);
       context.globalCompositeOperation = "lighter";
 
-      const lineCount = isLowMotion() ? 16 : 30;
+      const lineCount = isLowMotion() ? 14 : 30;
       const steps = isLowMotion() ? 18 : 30;
       const stepX = width / steps;
-      const amplitude = Math.min(height * 0.045, 34);
+      const waveAmp = Math.min(height * 0.045, 34) * amplitude;
+      const distBias = Math.max(-0.8, Math.min(0.8, distance));
+      const px = pointer.x * 0.16;
+      const py = pointer.y * 0.18;
 
       for (let i = 0; i < lineCount; i += 1) {
         const ratio = i / Math.max(1, lineCount - 1);
-        const yBase = ratio * height;
+        const yBase = ratio * height + distBias * 26;
         const hueShift = 290 + ratio * 120;
         const alpha = isLowMotion() ? 0.08 : 0.14;
 
@@ -60,9 +74,9 @@ export function ThreadsBackground() {
         for (let s = 0; s <= steps; s += 1) {
           const x = s * stepX;
           const wave =
-            Math.sin(x * 0.006 + t * 1.4 + i * 0.42) * amplitude +
-            Math.cos(x * 0.0035 - t * 0.9 + i * 0.31) * (amplitude * 0.42);
-          const y = yBase + wave;
+            Math.sin((x + px) * 0.006 + t * 1.4 + i * 0.42) * waveAmp +
+            Math.cos((x - px) * 0.0035 - t * 0.9 + i * 0.31) * (waveAmp * 0.42);
+          const y = yBase + wave + py * (0.22 + ratio * 0.24);
 
           if (s === 0) {
             context.moveTo(x, y);
@@ -93,7 +107,16 @@ export function ThreadsBackground() {
     resize();
     render(performance.now());
 
+    const onPointerMove = (event: PointerEvent) => {
+      if (!enableMouseInteraction || isLowMotion()) {
+        return;
+      }
+      pointer.x = (event.clientX / width - 0.5) * 2;
+      pointer.y = (event.clientY / height - 0.5) * 2;
+    };
+
     window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
     mobileQuery.addEventListener("change", handleLowMotionChange);
     reducedMotionQuery.addEventListener("change", handleLowMotionChange);
 
@@ -102,10 +125,11 @@ export function ThreadsBackground() {
         window.cancelAnimationFrame(rafId);
       }
       window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onPointerMove);
       mobileQuery.removeEventListener("change", handleLowMotionChange);
       reducedMotionQuery.removeEventListener("change", handleLowMotionChange);
     };
-  }, []);
+  }, [amplitude, distance, enableMouseInteraction]);
 
   return (
     <div className={styles.threads}>

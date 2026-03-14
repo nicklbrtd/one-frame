@@ -43,7 +43,7 @@ export default function Home() {
       />
 
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-20">
-        <ThreadsBackground />
+        <ThreadsBackground amplitude={1} distance={0} enableMouseInteraction />
         <div className="absolute inset-0 bg-black/28" />
       </div>
 
