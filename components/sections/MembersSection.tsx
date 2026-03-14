@@ -89,10 +89,11 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const topRow = members;
-  const bottomRow = [...members.slice(1), members[0]];
+  const topRow = members.filter((_, index) => index % 2 === 0);
+  const bottomRow = members.filter((_, index) => index % 2 === 1);
+  const safeBottomRow = bottomRow.length > 0 ? bottomRow : topRow;
   const repeatedTopRow = [...topRow, ...topRow];
-  const repeatedBottomRow = [...bottomRow, ...bottomRow];
+  const repeatedBottomRow = [...safeBottomRow, ...safeBottomRow];
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -126,7 +127,7 @@ export function MembersSection() {
             ))}
           </div>
 
-          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-36s" }}>
+          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-24s" }}>
             {repeatedBottomRow.map((member, index) => (
               <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
                 <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
