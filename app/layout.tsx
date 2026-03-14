@@ -20,8 +20,8 @@ const fontVariableProximity = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-  title: "П9ИВ",
-  description: "Иммерсивная визуальная история группы П9ИВ: характеры, атмосфера и общая память.",
+  title: "ПДИВ",
+  description: "какой-нибудь текст о нас короткий",
 };
 
 export default function RootLayout({
