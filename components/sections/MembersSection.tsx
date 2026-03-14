@@ -7,13 +7,15 @@ import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import { StaggerGroup, StaggerItem } from "@/components/ui/StaggerGroup";
 import { copy } from "@/data/copy";
 import { members } from "@/data/members";
 
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const repeatedMembers = [...members, ...members];
+  const topRow = members;
+  const bottomRow = [...members].reverse();
+  const repeatedTopRow = [...topRow, ...topRow];
+  const repeatedBottomRow = [...bottomRow, ...bottomRow];
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -26,36 +28,62 @@ export function MembersSection() {
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
 
-      <div className="relative mt-12 overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-6 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#06090f] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#06090f] to-transparent" />
+      <div className="relative mt-12 hidden overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-8 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl lg:block">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
 
-        <div className="marquee-left flex min-w-max items-center gap-3 px-3">
-          {repeatedMembers.map((member, index) => (
-            <span
-              key={`member-left-${member.id}-${index}`}
-              className="rounded-full border border-white/8 bg-white/6 px-4 py-2 text-xs uppercase tracking-[0.19em] text-white/60"
-            >
-              {member.name}
-            </span>
+        <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
+          {repeatedTopRow.map((member, index) => (
+            <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
+              <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
+                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
+                  {member.name.slice(0, 1)}
+                </div>
+                <h3 className="font-display text-3xl text-white">{member.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {member.keywords.map((keyword) => (
+                    <span
+                      key={keyword}
+                      className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </div>
           ))}
         </div>
 
-        <div className="marquee-right mt-4 flex min-w-max items-center gap-3 px-3">
-          {[...repeatedMembers].reverse().map((member, index) => (
-            <span
-              key={`member-right-${member.id}-${index}`}
-              className="rounded-full border border-[#7ad5cf]/12 bg-[#7ad5cf]/8 px-4 py-2 text-xs uppercase tracking-[0.19em] text-white/60"
-            >
-              {member.name}
-            </span>
+        <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5">
+          {repeatedBottomRow.map((member, index) => (
+            <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
+              <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
+                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
+                  {member.name.slice(0, 1)}
+                </div>
+                <h3 className="font-display text-3xl text-white">{member.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {member.keywords.map((keyword) => (
+                    <span
+                      key={keyword}
+                      className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </div>
           ))}
         </div>
       </div>
 
-      <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" amount={0.09}>
+      <div className="mt-12 grid grid-cols-2 gap-4 lg:hidden">
         {members.map((member) => (
-          <StaggerItem key={member.id}>
+          <div key={member.id}>
             <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
               <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
                 {member.name.slice(0, 1)}
@@ -73,9 +101,9 @@ export function MembersSection() {
                 ))}
               </div>
             </SpotlightCard>
-          </StaggerItem>
+          </div>
         ))}
-      </StaggerGroup>
+      </div>
 
       <AnimatePresence>
         {selectedMember ? (

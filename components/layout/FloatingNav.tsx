@@ -78,6 +78,7 @@ export function FloatingNav({
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
 }: FloatingNavProps) {
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(() => {
     if (typeof window === "undefined") {
@@ -113,7 +114,7 @@ export function FloatingNav({
 
   const createParticles = () => {
     const effectEl = filterRef.current;
-    if (!effectEl || shouldReduceMotion) {
+    if (!effectEl || shouldReduceMotion || isMobile) {
       return;
     }
 
@@ -191,7 +192,7 @@ export function FloatingNav({
   };
 
   const triggerTextEffect = () => {
-    if (!textRef.current) {
+    if (!textRef.current || isMobile) {
       return;
     }
 
@@ -255,6 +256,15 @@ export function FloatingNav({
     scrollToSection(target);
     window.history.replaceState(null, "", `#${links[index].id}`);
   };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
 
   useEffect(() => {
     const sectionEls = ids

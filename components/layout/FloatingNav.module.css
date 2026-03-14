@@ -239,6 +239,22 @@
   .text {
     font-size: 0.82rem;
   }
+
+  .effect {
+    display: none;
+  }
+
+  .item,
+  .item::after,
+  .text {
+    transition: none;
+  }
+
+  .activeEffect::after,
+  .particle,
+  .point {
+    animation: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

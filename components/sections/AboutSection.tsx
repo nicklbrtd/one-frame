@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -7,18 +9,33 @@ import { VariableProximity } from "@/components/ui/VariableProximity";
 import { copy } from "@/data/copy";
 
 export function AboutSection() {
+  const [enableVariableProximity, setEnableVariableProximity] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 721px)");
+    const update = () => setEnableVariableProximity(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener("change", update);
+
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
   return (
     <SectionShell id="about" eyebrow="Манифест">
       <Reveal>
         <SectionHeading title={copy.about.title} />
-        <VariableProximity
-          label={copy.about.text}
-          fromFontVariationSettings="'wght' 320, 'opsz' 12"
-          toFontVariationSettings="'wght' 980, 'opsz' 96"
-          falloff="gaussian"
-          radius={360}
-          className="mt-5 block max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg"
-        />
+        {enableVariableProximity ? (
+          <VariableProximity
+            label={copy.about.text}
+            fromFontVariationSettings="'wght' 320, 'opsz' 12"
+            toFontVariationSettings="'wght' 980, 'opsz' 96"
+            falloff="gaussian"
+            radius={360}
+            className="mt-5 block max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg"
+          />
+        ) : (
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg">{copy.about.text}</p>
+        )}
       </Reveal>
       <Reveal delay={0.1} className="mt-10">
         <div className="grid gap-6 rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.88),rgba(8,12,18,0.74))] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:grid-cols-3">
