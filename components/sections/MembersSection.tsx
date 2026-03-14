@@ -40,7 +40,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
                 alt={member.name}
                 width={128}
                 height={128}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[50%_14%]"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
@@ -62,7 +62,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
                 alt={member.name}
                 width={48}
                 height={48}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[50%_14%]"
               />
             ) : (
               <span className="font-display text-lg">{initialsFromName(member.name)}</span>
@@ -152,7 +152,7 @@ export function MembersSection() {
                     alt={selectedMember.name}
                     width={192}
                     height={192}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-[50%_14%]"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center font-display text-5xl text-white/68">
