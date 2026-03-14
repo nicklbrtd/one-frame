@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
@@ -91,11 +91,8 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const topRow = members.filter((_, index) => index % 2 === 0);
-  const bottomRow = members.filter((_, index) => index % 2 === 1);
-  const safeBottomRow = bottomRow.length > 0 ? bottomRow : topRow;
-  const repeatedTopRow = [...topRow, ...topRow];
-  const repeatedBottomRow = [...safeBottomRow, ...safeBottomRow];
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -110,55 +107,149 @@ export function MembersSection() {
     return () => mediaQuery.removeEventListener("change", sync);
   }, []);
 
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || members.length === 0) return;
+
+    const config = isDesktopLayout
+      ? {
+          cardWidth: 290,
+          cardHeight: 348,
+          rowGap: 20,
+          desiredGap: 20,
+          speed: 34,
+          minHiddenRunEachSide: 420,
+        }
+      : {
+          cardWidth: 152,
+          cardHeight: 172,
+          rowGap: 12,
+          desiredGap: 12,
+          speed: 28,
+          minHiddenRunEachSide: 220,
+        };
+
+    let stageWidth = stage.clientWidth;
+    let animationFrame = 0;
+    let previousTimestamp = 0;
+    let offset = 0;
+
+    const layout = {
+      topY: 0,
+      bottomY: config.cardHeight + config.rowGap,
+      leftX: 0,
+      rightX: 0,
+      horizontalRun: 0,
+      verticalRun: config.cardHeight + config.rowGap,
+      perimeter: 0,
+      spacing: 0,
+      stageHeight: config.cardHeight * 2 + config.rowGap,
+    };
+
+    const recalculate = () => {
+      stageWidth = stage.clientWidth;
+      const visibleRun = Math.max(stageWidth - config.cardWidth, 1);
+      const requiredPerimeter = members.length * (config.cardWidth + config.desiredGap);
+      const minHorizontalForSpacing = requiredPerimeter / 2 - layout.verticalRun;
+      const horizontalRun = Math.max(
+        visibleRun + config.minHiddenRunEachSide * 2,
+        minHorizontalForSpacing,
+      );
+
+      const hiddenRunEachSide = (horizontalRun - visibleRun) / 2;
+      layout.horizontalRun = horizontalRun;
+      layout.leftX = -hiddenRunEachSide;
+      layout.rightX = visibleRun + hiddenRunEachSide;
+      layout.perimeter = 2 * (layout.horizontalRun + layout.verticalRun);
+      layout.spacing = layout.perimeter / members.length;
+      stage.style.height = `${layout.stageHeight}px`;
+    };
+
+    const pointAt = (distance: number) => {
+      const loop = layout.perimeter;
+      let d = ((distance % loop) + loop) % loop;
+
+      if (d < layout.horizontalRun) {
+        return { x: layout.rightX - d, y: layout.topY };
+      }
+
+      d -= layout.horizontalRun;
+      if (d < layout.verticalRun) {
+        return { x: layout.leftX, y: layout.topY + d };
+      }
+
+      d -= layout.verticalRun;
+      if (d < layout.horizontalRun) {
+        return { x: layout.leftX + d, y: layout.bottomY };
+      }
+
+      d -= layout.horizontalRun;
+      return { x: layout.rightX, y: layout.bottomY - d };
+    };
+
+    const frame = (timestamp: number) => {
+      if (!previousTimestamp) previousTimestamp = timestamp;
+      const deltaSeconds = (timestamp - previousTimestamp) / 1000;
+      previousTimestamp = timestamp;
+      offset += config.speed * deltaSeconds;
+
+      for (let index = 0; index < members.length; index += 1) {
+        const card = itemRefs.current[index];
+        if (!card) continue;
+        const baseDistance = index * layout.spacing;
+        const { x, y } = pointAt(baseDistance + offset);
+        card.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
+
+      animationFrame = window.requestAnimationFrame(frame);
+    };
+
+    recalculate();
+    animationFrame = window.requestAnimationFrame(frame);
+
+    const resizeObserver = new ResizeObserver(() => {
+      recalculate();
+    });
+    resizeObserver.observe(stage);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+    };
+  }, [isDesktopLayout]);
+
+  const cardWidth = isDesktopLayout ? 290 : 152;
+  const cardMode: CardMode = isDesktopLayout ? "desktop" : "mobile";
+
   return (
     <SectionShell id="members" eyebrow="Люди">
       <Reveal>
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
 
-      {isDesktopLayout ? (
-        <div className="relative mt-12 overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-8 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
+      <div
+        className={`relative mt-12 overflow-hidden border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl ${
+          isDesktopLayout ? "rounded-[30px] p-5" : "rounded-[26px] p-3"
+        }`}
+      >
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#06090f] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#06090f] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
 
-          <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
-            {repeatedTopRow.map((member, index) => (
-              <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
-                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
-          </div>
-
-          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-30s" }}>
-            {repeatedBottomRow.map((member, index) => (
-              <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
-                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
-          </div>
+        <div ref={stageRef} className={styles.loopStage}>
+          {members.map((member, index) => (
+            <div
+              key={member.id}
+              ref={(node) => {
+                itemRefs.current[index] = node;
+              }}
+              className={styles.loopItem}
+              style={{ width: `${cardWidth}px` }}
+            >
+              <MemberCard member={member} mode={cardMode} onClick={() => setSelectedId(member.id)} />
+            </div>
+          ))}
         </div>
-      ) : (
-        <div className="relative mt-12 overflow-hidden rounded-[26px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.84),rgba(8,12,18,0.72))] py-4 shadow-[0_16px_60px_rgba(0,0,0,0.32)]">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#06090f] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#06090f] to-transparent" />
-
-          <div className="marquee-left flex min-w-max items-stretch gap-3 px-3">
-            {repeatedTopRow.map((member, index) => (
-              <div key={`mobile-top-${member.id}-${index}`} className="w-[152px] shrink-0">
-                <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
-          </div>
-
-          <div className="marquee-right mt-3 flex min-w-max items-stretch gap-3 px-3" style={{ animationDelay: "-30s" }}>
-            {repeatedBottomRow.map((member, index) => (
-              <div key={`mobile-bottom-${member.id}-${index}`} className="w-[152px] shrink-0">
-                <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      </div>
 
       <AnimatePresence>
         {selectedMember ? (

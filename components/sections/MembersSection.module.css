@@ -60,6 +60,18 @@
   background: linear-gradient(180deg, rgba(5, 8, 14, 0.14) 0%, rgba(5, 8, 14, 0.74) 78%, rgba(5, 8, 14, 0.92) 100%);
 }
 
+.loopStage {
+  position: relative;
+  width: 100%;
+}
+
+.loopItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
 @media (max-width: 768px) {
   .card {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
