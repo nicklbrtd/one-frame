@@ -1,0 +1,60 @@
+.card {
+  --behind-glow-color: hsla(1, 100%, 70%, 0.6);
+  --inner-gradient: linear-gradient(145deg, hsla(1, 40%, 45%, 0.55) 0%, hsla(108, 60%, 70%, 0.27) 100%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(165deg, rgba(14, 20, 30, 0.96), rgba(8, 12, 20, 0.9));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -26%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 24% 18%, var(--behind-glow-color), transparent 58%);
+  filter: blur(24px);
+  opacity: 0.55;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 27px;
+  background: var(--inner-gradient);
+  opacity: 0.56;
+  mix-blend-mode: screen;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition: transform 0.28s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .card::before {
+    opacity: 0.38;
+    filter: blur(16px);
+  }
+}

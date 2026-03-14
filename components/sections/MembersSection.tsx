@@ -2,13 +2,14 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { copy } from "@/data/copy";
 import { Member, members } from "@/data/members";
+import styles from "./MembersSection.module.css";
 
 const initialsFromName = (name: string) => {
   const parts = name.split(" ").filter(Boolean);
@@ -28,12 +29,13 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
     <button
       type="button"
       onClick={onClick}
-      className={`relative w-full overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.92),rgba(9,13,20,0.76))] text-left shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-transform hover:-translate-y-1 ${
-        isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"
+      className={`${styles.card} w-full text-left ${
+        isDesktop
+          ? "h-[348px] p-5 transition-transform hover:-translate-y-1"
+          : "h-[260px] p-4 sm:h-[272px] sm:p-5"
       }`}
     >
-      <div className="pointer-events-none absolute inset-[1px] rounded-[27px] border border-white/6" />
-      <div className="relative z-10">
+      <div className={styles.content}>
       {isDesktop ? (
         <>
           <div className="mx-auto h-32 w-32 overflow-hidden rounded-xl border border-white/10 bg-white/8">
@@ -86,6 +88,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isDesktopLayout, setIsDesktopLayout] = useState(false);
   const topRow = members.filter((_, index) => index % 2 === 0);
   const bottomRow = members.filter((_, index) => index % 2 !== 0);
   const repeatedTopRow = [...topRow, ...topRow];
@@ -96,45 +99,55 @@ export function MembersSection() {
     [selectedId],
   );
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setIsDesktopLayout(mediaQuery.matches);
+    sync();
+    mediaQuery.addEventListener("change", sync);
+    return () => mediaQuery.removeEventListener("change", sync);
+  }, []);
+
   return (
     <SectionShell id="members" eyebrow="Люди">
       <Reveal>
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
 
-      <div className="relative mt-12 hidden overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-8 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl lg:block">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
+      {isDesktopLayout ? (
+        <div className="relative mt-12 overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-8 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
 
-        <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
-          {repeatedTopRow.map((member, index) => (
-            <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
-              <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-            </div>
-          ))}
-        </div>
-
-        <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5">
-          {repeatedBottomRow.map((member, index) => (
-            <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
-              <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-12 grid grid-cols-2 gap-4 lg:hidden">
-        {members.map((member) => (
-          <div key={member.id}>
-            <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
+          <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
+            {repeatedTopRow.map((member, index) => (
+              <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
+                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5">
+            {repeatedBottomRow.map((member, index) => (
+              <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
+                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-12 grid grid-cols-2 gap-4">
+          {members.map((member) => (
+            <div key={member.id}>
+              <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
+            </div>
+          ))}
+        </div>
+      )}
 
       <AnimatePresence>
         {selectedMember ? (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/58 px-5 backdrop-blur-md"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/58 px-5 md:backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

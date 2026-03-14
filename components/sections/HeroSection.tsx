@@ -1,11 +1,21 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import { copy } from "@/data/copy";
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
+  const [allowHeroMotion, setAllowHeroMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const sync = () => setAllowHeroMotion(mediaQuery.matches);
+    sync();
+    mediaQuery.addEventListener("change", sync);
+    return () => mediaQuery.removeEventListener("change", sync);
+  }, []);
 
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-24">
@@ -13,7 +23,7 @@ export function HeroSection() {
         <motion.div
           className="absolute -left-20 top-16 h-72 w-72 rounded-full bg-[#70a5e8]/24 blur-[110px]"
           animate={
-            shouldReduceMotion
+            shouldReduceMotion || !allowHeroMotion
               ? undefined
               : {
                   y: [0, -24, 0],
@@ -25,7 +35,7 @@ export function HeroSection() {
         <motion.div
           className="absolute right-[-5%] top-[18%] h-[26rem] w-[26rem] rounded-full bg-[#58d2c8]/20 blur-[130px]"
           animate={
-            shouldReduceMotion
+            shouldReduceMotion || !allowHeroMotion
               ? undefined
               : {
                   y: [0, 26, 0],
@@ -37,7 +47,7 @@ export function HeroSection() {
         <motion.div
           className="absolute bottom-[-14%] left-[30%] h-[24rem] w-[24rem] rounded-full bg-[#8563ff]/16 blur-[140px]"
           animate={
-            shouldReduceMotion
+            shouldReduceMotion || !allowHeroMotion
               ? undefined
               : {
                   y: [0, -18, 0],
