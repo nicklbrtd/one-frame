@@ -21,7 +21,7 @@ const fontVariableProximity = Roboto_Flex({
 
 export const metadata: Metadata = {
   title: "ПДИВ",
-  description: "какой-нибудь текст о нас короткий",
+  description: "Это сайт короче я хз",
 };
 
 export default function RootLayout({

@@ -9,11 +9,11 @@ import { MembersSection } from "@/components/sections/MembersSection";
 import { TeacherSection } from "@/components/sections/TeacherSection";
 
 const links = [
-  { id: "home", label: "Главная" },
-  { id: "about", label: "О нас" },
-  { id: "teacher", label: "Преподаватель" },
-  { id: "members", label: "Участники" },
-  { id: "finale", label: "Финал" },
+  { id: "home", label: "Начало" },
+  { id: "about", label: "Кто мы" },
+  { id: "teacher", label: "Преп." },
+  { id: "members", label: "Студенты" },
+  { id: "finale", label: "Концовка" },
 ];
 
 export default function Home() {
