@@ -82,14 +82,16 @@ export function HeroSection() {
           transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3"
         >
-          {["эффект присутствия", "мягкая динамика", "киношная глубина"].map((item) => (
+          {["сюда можно что-то вставить", "сюда можно что-то вставить", "сюда можно что-то вставить"].map(
+            (item, index) => (
             <div
-              key={item}
+              key={`${item}-${index}`}
               className="rounded-full border border-white/10 bg-white/5 px-4 py-3 text-center text-[11px] uppercase tracking-[0.22em] text-white/58 backdrop-blur-md"
             >
               {item}
             </div>
-          ))}
+            ),
+          )}
         </motion.div>
 
         <motion.div

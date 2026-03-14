@@ -40,15 +40,15 @@ export function AboutSection() {
       <Reveal delay={0.1} className="mt-10">
         <div className="grid gap-6 rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.88),rgba(8,12,18,0.74))] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:grid-cols-3">
           {[
-            "Индивидуальность",
-            "Единство",
-            "Атмосфера",
-            "Память",
-            "Присутствие",
-            "Идентичность",
-          ].map((item) => (
+            "сюда можно что-то вставить",
+            "сюда можно что-то вставить",
+            "сюда можно что-то вставить",
+            "сюда можно что-то вставить",
+            "сюда можно что-то вставить",
+            "сюда можно что-то вставить",
+          ].map((item, index) => (
             <div
-              key={item}
+              key={`${item}-${index}`}
               className="rounded-2xl border border-white/8 bg-gradient-to-b from-white/8 to-white/[0.03] px-4 py-5 text-sm uppercase tracking-[0.16em] text-white/64"
             >
               {item}
