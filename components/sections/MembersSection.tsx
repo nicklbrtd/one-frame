@@ -25,11 +25,42 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
   const hasPhoto = Boolean(member.photo);
   const isDesktop = mode === "desktop";
 
+  if (!isDesktop) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${styles.card} h-[198px] w-full overflow-hidden rounded-[22px] p-0 text-left`}
+      >
+        {member.isFormer ? (
+          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-black/28 px-2 py-1 text-[9px] uppercase tracking-[0.11em] text-white/76">
+            Уже не с нами
+          </p>
+        ) : null}
+
+        <div className="relative h-24 w-full overflow-hidden border-b border-white/10 bg-white/8">
+          {hasPhoto ? (
+            <Image src={member.photo ?? ""} alt={member.name} width={580} height={696} className="h-full w-full object-contain object-[50%_12%]" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
+              {initialsFromName(member.name)}
+            </div>
+          )}
+        </div>
+
+        <div className="relative z-10 px-3 pb-3 pt-2">
+          <h3 className="truncate font-display text-[1rem] leading-none text-white">{member.name}</h3>
+          <p className="mt-2 min-h-[2.5rem] line-clamp-2 text-xs leading-snug text-white/74">{member.description}</p>
+        </div>
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`${styles.card} w-full text-left ${isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"}`}
+      className={`${styles.card} h-[348px] w-full p-5 text-left`}
     >
       <div className={styles.media}>
         {hasPhoto ? (
@@ -42,10 +73,14 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       </div>
       <div className={styles.scrim} />
       <div className={`${styles.content} flex h-full flex-col justify-end`}>
-        <h3 className="font-display text-2xl text-white">{member.name}</h3>
-        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/72">{member.description}</p>
+        {member.isFormer ? (
+          <p className="absolute right-3 top-3 rounded-full border border-white/25 bg-black/26 px-3 py-1 text-[10px] uppercase tracking-[0.13em] text-white/76">
+            Уже не с нами
+          </p>
+        ) : null}
 
-        {member.isFormer ? <p className="mt-4 text-xs uppercase tracking-[0.16em] text-rose-200/86">Уже не с нами</p> : null}
+        <h3 className="max-w-[86%] truncate font-display text-lg leading-none text-white">{member.name}</h3>
+        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-white/74">{member.description}</p>
       </div>
     </button>
   );
@@ -54,8 +89,8 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const topRow = members.filter((_, index) => index % 2 === 0);
-  const bottomRow = members.filter((_, index) => index % 2 !== 0);
+  const topRow = members;
+  const bottomRow = [...members.slice(1), members[0]];
   const repeatedTopRow = [...topRow, ...topRow];
   const repeatedBottomRow = [...bottomRow, ...bottomRow];
 
@@ -91,7 +126,7 @@ export function MembersSection() {
             ))}
           </div>
 
-          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5">
+          <div className="marquee-left mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-28s" }}>
             {repeatedBottomRow.map((member, index) => (
               <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
                 <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
