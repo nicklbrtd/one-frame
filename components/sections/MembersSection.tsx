@@ -13,6 +13,7 @@ import { members } from "@/data/members";
 
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const repeatedMembers = [...members, ...members];
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -24,6 +25,33 @@ export function MembersSection() {
       <Reveal>
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
+
+      <div className="relative mt-12 overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] py-6 shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#06090f] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#06090f] to-transparent" />
+
+        <div className="marquee-left flex min-w-max items-center gap-3 px-3">
+          {repeatedMembers.map((member, index) => (
+            <span
+              key={`member-left-${member.id}-${index}`}
+              className="rounded-full border border-white/8 bg-white/6 px-4 py-2 text-xs uppercase tracking-[0.19em] text-white/60"
+            >
+              {member.name}
+            </span>
+          ))}
+        </div>
+
+        <div className="marquee-right mt-4 flex min-w-max items-center gap-3 px-3">
+          {[...repeatedMembers].reverse().map((member, index) => (
+            <span
+              key={`member-right-${member.id}-${index}`}
+              className="rounded-full border border-[#7ad5cf]/12 bg-[#7ad5cf]/8 px-4 py-2 text-xs uppercase tracking-[0.19em] text-white/60"
+            >
+              {member.name}
+            </span>
+          ))}
+        </div>
+      </div>
 
       <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" amount={0.09}>
         {members.map((member) => (

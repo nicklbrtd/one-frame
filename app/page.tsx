@@ -3,18 +3,14 @@ import { ColorBends } from "@/components/backgrounds/ColorBends";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
 import { AboutSection } from "@/components/sections/AboutSection";
-import { AtmosphereSection } from "@/components/sections/AtmosphereSection";
 import { FinaleSection } from "@/components/sections/FinaleSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { MembersSection } from "@/components/sections/MembersSection";
-import { MomentsSection } from "@/components/sections/MomentsSection";
 
 const links = [
   { id: "home", label: "Главная" },
   { id: "about", label: "О нас" },
   { id: "members", label: "Участники" },
-  { id: "atmosphere", label: "Атмосфера" },
-  { id: "moments", label: "Моменты" },
   { id: "finale", label: "Финал" },
 ];
 
@@ -62,8 +58,6 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <MembersSection />
-      <AtmosphereSection />
-      <MomentsSection />
       <FinaleSection />
     </main>
   );
