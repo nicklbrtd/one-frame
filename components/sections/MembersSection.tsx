@@ -8,12 +8,69 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { copy } from "@/data/copy";
-import { members } from "@/data/members";
+import { Member, members } from "@/data/members";
+
+const initialsFromName = (name: string) => {
+  const parts = name.split(" ").filter(Boolean);
+  if (parts.length >= 2) {
+    return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase();
+  }
+  return (parts[0]?.slice(0, 1) ?? "").toUpperCase();
+};
+
+type CardMode = "desktop" | "mobile";
+
+function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode; onClick: () => void }) {
+  const hasPhoto = Boolean(member.photo);
+  const isDesktop = mode === "desktop";
+
+  return (
+    <SpotlightCard
+      tint={member.color}
+      onClick={onClick}
+      className={isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"}
+    >
+      {isDesktop ? (
+        <>
+          <div className="mx-auto h-32 w-32 overflow-hidden rounded-xl border border-white/10 bg-white/8">
+            {hasPhoto ? (
+              <img src={member.photo} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
+                {initialsFromName(member.name)}
+              </div>
+            )}
+          </div>
+          <div className="mt-5">
+            <h3 className="font-display text-2xl text-white">{member.name}</h3>
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/64">{member.description}</p>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/8 text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
+            {hasPhoto ? (
+              <img src={member.photo} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
+            ) : (
+              <span className="font-display text-lg">{initialsFromName(member.name)}</span>
+            )}
+          </div>
+          <h3 className="font-display text-2xl text-white">{member.name}</h3>
+          <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-white/64">{member.description}</p>
+        </>
+      )}
+
+      {member.isFormer ? (
+        <p className="mt-4 text-xs uppercase tracking-[0.16em] text-rose-200/80">Уже не с нами</p>
+      ) : null}
+    </SpotlightCard>
+  );
+}
 
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const topRow = members;
-  const bottomRow = [...members].reverse();
+  const topRow = members.filter((_, index) => index % 2 === 0);
+  const bottomRow = members.filter((_, index) => index % 2 !== 0);
   const repeatedTopRow = [...topRow, ...topRow];
   const repeatedBottomRow = [...bottomRow, ...bottomRow];
 
@@ -35,23 +92,7 @@ export function MembersSection() {
         <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
           {repeatedTopRow.map((member, index) => (
             <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
-              <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
-                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
-                  {member.name.slice(0, 1)}
-                </div>
-                <h3 className="font-display text-3xl text-white">{member.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {member.keywords.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-              </SpotlightCard>
+              <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
             </div>
           ))}
         </div>
@@ -59,23 +100,7 @@ export function MembersSection() {
         <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5">
           {repeatedBottomRow.map((member, index) => (
             <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
-              <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
-                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
-                  {member.name.slice(0, 1)}
-                </div>
-                <h3 className="font-display text-3xl text-white">{member.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {member.keywords.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-              </SpotlightCard>
+              <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
             </div>
           ))}
         </div>
@@ -84,23 +109,7 @@ export function MembersSection() {
       <div className="mt-12 grid grid-cols-2 gap-4 lg:hidden">
         {members.map((member) => (
           <div key={member.id}>
-            <SpotlightCard tint={member.color} onClick={() => setSelectedId(member.id)}>
-              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 font-display text-lg text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
-                {member.name.slice(0, 1)}
-              </div>
-              <h3 className="font-display text-3xl text-white">{member.name}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/64">{member.phrase}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {member.keywords.map((keyword) => (
-                  <span
-                    key={keyword}
-                    className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-white/52"
-                  >
-                    {keyword}
-                  </span>
-                ))}
-              </div>
-            </SpotlightCard>
+            <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
           </div>
         ))}
       </div>
@@ -123,23 +132,28 @@ export function MembersSection() {
               onClick={(event) => event.stopPropagation()}
             >
               <p className="text-xs uppercase tracking-[0.24em] text-white/42">Портрет участника</p>
-              <h3 className="mt-3 font-display text-5xl text-white">{selectedMember.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-white/64">{selectedMember.phrase}</p>
-
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {selectedMember.keywords.map((keyword) => (
-                  <div
-                    key={keyword}
-                    className="rounded-xl border border-white/8 bg-white/6 px-4 py-3 text-sm uppercase tracking-[0.14em] text-white/54"
-                  >
-                    {keyword}
+              <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border border-white/10 bg-white/8">
+                {selectedMember.photo ? (
+                  <img
+                    src={selectedMember.photo}
+                    alt={selectedMember.name}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center font-display text-5xl text-white/68">
+                    {initialsFromName(selectedMember.name)}
                   </div>
-                ))}
+                )}
               </div>
+              <h3 className="mt-4 font-display text-5xl text-white">{selectedMember.name}</h3>
+              <p className="mt-4 text-base leading-relaxed text-white/64">{selectedMember.description}</p>
 
-              <div className="mt-6 rounded-xl border border-[#7ad5cf]/15 bg-[#7ad5cf]/8 px-4 py-3 text-sm text-white/62">
-                Настроение: <span className="font-medium text-white">{selectedMember.mood}</span>
-              </div>
+              {selectedMember.isFormer ? (
+                <div className="mt-6 rounded-xl border border-rose-200/25 bg-rose-100/10 px-4 py-3 text-sm text-rose-100/80">
+                  Уже не с нами
+                </div>
+              ) : null}
 
               <button
                 type="button"
