@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
@@ -34,7 +35,13 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
         <>
           <div className="mx-auto h-32 w-32 overflow-hidden rounded-xl border border-white/10 bg-white/8">
             {hasPhoto ? (
-              <img src={member.photo} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
+              <Image
+                src={member.photo ?? ""}
+                alt={member.name}
+                width={128}
+                height={128}
+                className="h-full w-full object-cover"
+              />
             ) : (
               <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
                 {initialsFromName(member.name)}
@@ -50,7 +57,13 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
         <>
           <div className="mb-4 inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/8 text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
             {hasPhoto ? (
-              <img src={member.photo} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
+              <Image
+                src={member.photo ?? ""}
+                alt={member.name}
+                width={48}
+                height={48}
+                className="h-full w-full object-cover"
+              />
             ) : (
               <span className="font-display text-lg">{initialsFromName(member.name)}</span>
             )}
@@ -134,11 +147,12 @@ export function MembersSection() {
               <p className="text-xs uppercase tracking-[0.24em] text-white/42">Портрет участника</p>
               <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border border-white/10 bg-white/8">
                 {selectedMember.photo ? (
-                  <img
+                  <Image
                     src={selectedMember.photo}
                     alt={selectedMember.name}
+                    width={192}
+                    height={192}
                     className="h-full w-full object-cover"
-                    loading="lazy"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center font-display text-5xl text-white/68">
