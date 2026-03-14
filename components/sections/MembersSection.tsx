@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { CSSProperties, useEffect, useMemo, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
@@ -30,17 +30,17 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <button
         type="button"
         onClick={onClick}
-        className={`${styles.card} h-[198px] w-full overflow-hidden rounded-[22px] p-0 text-left`}
+        className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}
       >
         {member.isFormer ? (
-          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-black/28 px-2 py-1 text-[9px] uppercase tracking-[0.11em] text-white/76">
+          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-black/28 px-2 py-1 text-[8px] uppercase tracking-[0.11em] text-white/76">
             Уже не с нами
           </p>
         ) : null}
 
-        <div className="relative h-24 w-full overflow-hidden border-b border-white/10 bg-white/8">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-white/8">
           {hasPhoto ? (
-            <Image src={member.photo ?? ""} alt={member.name} width={580} height={696} className="h-full w-full object-contain object-[50%_12%]" />
+            <Image src={member.photo ?? ""} alt={member.name} width={580} height={696} className="h-full w-full object-cover object-center" />
           ) : (
             <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
               {initialsFromName(member.name)}
@@ -48,9 +48,11 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
           )}
         </div>
 
-        <div className="relative z-10 px-3 pb-3 pt-2">
-          <h3 className="truncate font-display text-[1rem] leading-none text-white">{member.name}</h3>
-          <p className="mt-2 min-h-[2.5rem] line-clamp-2 text-xs leading-snug text-white/74">{member.description}</p>
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#05080ef0] via-[#05080e66] to-transparent" />
+
+        <div className="relative z-10 flex h-full flex-col justify-end px-3 pb-3 pt-2">
+          <h3 className="truncate font-display text-[0.95rem] leading-none text-white">{member.name}</h3>
+          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-white/74">{member.description}</p>
         </div>
       </button>
     );
@@ -89,11 +91,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const topRow = members.filter((_, index) => index % 2 === 0);
-  const bottomRow = members.filter((_, index) => index % 2 === 1);
-  const safeBottomRow = bottomRow.length > 0 ? bottomRow : topRow;
-  const repeatedTopRow = [...topRow, ...topRow];
-  const repeatedBottomRow = [...safeBottomRow, ...safeBottomRow];
+  const ORBIT_DURATION_SECONDS = 44;
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -119,29 +117,43 @@ export function MembersSection() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
 
-          <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
-            {repeatedTopRow.map((member, index) => (
-              <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
-                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
-          </div>
+          <div className={styles.orbitStage}>
+            {members.map((member, index) => {
+              const orbitDelay = -((ORBIT_DURATION_SECONDS / members.length) * index);
+              const orbitStyle = {
+                animationDuration: `${ORBIT_DURATION_SECONDS}s`,
+                animationDelay: `${orbitDelay}s`,
+              } as CSSProperties;
 
-          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-24s" }}>
-            {repeatedBottomRow.map((member, index) => (
-              <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
-                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-              </div>
-            ))}
+              return (
+                <div key={member.id} className={styles.orbitItem} style={orbitStyle}>
+                  <div className="w-[290px] shrink-0">
+                    <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (
-        <div className="mt-12 grid grid-cols-2 gap-4">
-          {members.map((member) => (
-            <div key={member.id}>
-              <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
-            </div>
-          ))}
+        <div className="relative mt-12 overflow-hidden rounded-[26px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.84),rgba(8,12,18,0.72))] py-4 shadow-[0_16px_60px_rgba(0,0,0,0.32)]">
+          <div className={styles.orbitStageMobile}>
+            {members.map((member, index) => {
+              const orbitDelay = -((ORBIT_DURATION_SECONDS / members.length) * index);
+              const orbitStyle = {
+                animationDuration: `${ORBIT_DURATION_SECONDS}s`,
+                animationDelay: `${orbitDelay}s`,
+              } as CSSProperties;
+
+              return (
+                <div key={`mobile-${member.id}`} className={styles.orbitItemMobile} style={orbitStyle}>
+                  <div className="w-[152px] shrink-0">
+                    <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 

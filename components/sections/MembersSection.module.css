@@ -60,6 +60,64 @@
   background: linear-gradient(180deg, rgba(5, 8, 14, 0.14) 0%, rgba(5, 8, 14, 0.74) 78%, rgba(5, 8, 14, 0.92) 100%);
 }
 
+.orbitStage {
+  --card-width: 290px;
+  --card-height: 348px;
+  --track-top: 0px;
+  --track-bottom: 368px;
+  --track-left: -330px;
+  --track-right: calc(100% + 40px);
+  position: relative;
+  height: 716px;
+}
+
+.orbitItem {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation-name: members-orbit-rect;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.orbitStageMobile {
+  --track-top: 0px;
+  --track-bottom: 186px;
+  --track-left: -172px;
+  --track-right: calc(100% + 20px);
+  position: relative;
+  height: 360px;
+}
+
+.orbitItemMobile {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation-name: members-orbit-rect;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes members-orbit-rect {
+  0% {
+    transform: translate3d(var(--track-right), var(--track-top), 0);
+  }
+  25% {
+    transform: translate3d(var(--track-left), var(--track-top), 0);
+  }
+  50% {
+    transform: translate3d(var(--track-left), var(--track-bottom), 0);
+  }
+  75% {
+    transform: translate3d(var(--track-right), var(--track-bottom), 0);
+  }
+  100% {
+    transform: translate3d(var(--track-right), var(--track-top), 0);
+  }
+}
+
 @media (max-width: 768px) {
   .card {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
@@ -68,5 +126,9 @@
   .card::before {
     opacity: 0.38;
     filter: blur(16px);
+  }
+
+  .orbitStage {
+    height: auto;
   }
 }
