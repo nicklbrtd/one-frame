@@ -141,7 +141,7 @@ export function MembersSection() {
           cardHeight: 348,
           rowGap: 20,
           desiredGap: 20,
-          speed: 56,
+          speed: 60,
           minHiddenRunEachSide: 420,
         }
       : {
@@ -149,7 +149,7 @@ export function MembersSection() {
           cardHeight: 172,
           rowGap: 12,
           desiredGap: 12,
-          speed: 38,
+          speed: 42,
           minHiddenRunEachSide: 220,
         };
 
