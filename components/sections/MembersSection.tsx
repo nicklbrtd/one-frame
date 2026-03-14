@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
@@ -91,7 +91,11 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 export function MembersSection() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const ORBIT_DURATION_SECONDS = 44;
+  const topRow = members.filter((_, index) => index % 2 === 0);
+  const bottomRow = members.filter((_, index) => index % 2 === 1);
+  const safeBottomRow = bottomRow.length > 0 ? bottomRow : topRow;
+  const repeatedTopRow = [...topRow, ...topRow];
+  const repeatedBottomRow = [...safeBottomRow, ...safeBottomRow];
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -117,42 +121,41 @@ export function MembersSection() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#06090f] to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#06090f] to-transparent" />
 
-          <div className={styles.orbitStage}>
-            {members.map((member, index) => {
-              const orbitDelay = -((ORBIT_DURATION_SECONDS / members.length) * index);
-              const orbitStyle = {
-                animationDuration: `${ORBIT_DURATION_SECONDS}s`,
-                animationDelay: `${orbitDelay}s`,
-              } as CSSProperties;
+          <div className="marquee-left flex min-w-max items-stretch gap-5 px-5">
+            {repeatedTopRow.map((member, index) => (
+              <div key={`desktop-top-${member.id}-${index}`} className="w-[290px] shrink-0">
+                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
+          </div>
 
-              return (
-                <div key={member.id} className={styles.orbitItem} style={orbitStyle}>
-                  <div className="w-[290px] shrink-0">
-                    <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
-                  </div>
-                </div>
-              );
-            })}
+          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-30s" }}>
+            {repeatedBottomRow.map((member, index) => (
+              <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
+                <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
           </div>
         </div>
       ) : (
         <div className="relative mt-12 overflow-hidden rounded-[26px] border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.84),rgba(8,12,18,0.72))] py-4 shadow-[0_16px_60px_rgba(0,0,0,0.32)]">
-          <div className={styles.orbitStageMobile}>
-            {members.map((member, index) => {
-              const orbitDelay = -((ORBIT_DURATION_SECONDS / members.length) * index);
-              const orbitStyle = {
-                animationDuration: `${ORBIT_DURATION_SECONDS}s`,
-                animationDelay: `${orbitDelay}s`,
-              } as CSSProperties;
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#06090f] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#06090f] to-transparent" />
 
-              return (
-                <div key={`mobile-${member.id}`} className={styles.orbitItemMobile} style={orbitStyle}>
-                  <div className="w-[152px] shrink-0">
-                    <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
-                  </div>
-                </div>
-              );
-            })}
+          <div className="marquee-left flex min-w-max items-stretch gap-3 px-3">
+            {repeatedTopRow.map((member, index) => (
+              <div key={`mobile-top-${member.id}-${index}`} className="w-[152px] shrink-0">
+                <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
+          </div>
+
+          <div className="marquee-right mt-3 flex min-w-max items-stretch gap-3 px-3" style={{ animationDelay: "-30s" }}>
+            {repeatedBottomRow.map((member, index) => (
+              <div key={`mobile-bottom-${member.id}-${index}`} className="w-[152px] shrink-0">
+                <MemberCard member={member} mode="mobile" onClick={() => setSelectedId(member.id)} />
+              </div>
+            ))}
           </div>
         </div>
       )}
