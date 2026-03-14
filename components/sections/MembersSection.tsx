@@ -126,7 +126,7 @@ export function MembersSection() {
             ))}
           </div>
 
-          <div className="marquee-left mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-28s" }}>
+          <div className="marquee-right mt-5 flex min-w-max items-stretch gap-5 px-5" style={{ animationDelay: "-36s" }}>
             {repeatedBottomRow.map((member, index) => (
               <div key={`desktop-bottom-${member.id}-${index}`} className="w-[290px] shrink-0">
                 <MemberCard member={member} mode="desktop" onClick={() => setSelectedId(member.id)} />
