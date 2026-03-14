@@ -2,72 +2,26 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  isolation: isolate;
   background: radial-gradient(circle at 20% 14%, rgba(255, 120, 140, 0.12), transparent 38%),
     radial-gradient(circle at 80% 20%, rgba(128, 112, 255, 0.12), transparent 40%),
     radial-gradient(circle at 52% 86%, rgba(40, 220, 180, 0.1), transparent 44%),
     linear-gradient(180deg, #090d14, #05070c);
 }
 
-.threads::before,
-.threads::after {
-  content: "";
+.canvas {
   position: absolute;
-  inset: -20%;
+  inset: 0;
   pointer-events: none;
-  background-repeat: repeat;
-  will-change: transform, opacity;
-}
-
-.threads::before {
-  background-image: repeating-linear-gradient(
-    112deg,
-    rgba(255, 255, 255, 0.08) 0 1px,
-    rgba(255, 255, 255, 0) 1px 12px
-  );
-  opacity: 0.35;
-  animation: thread-drift-a 34s linear infinite;
-}
-
-.threads::after {
-  background-image: repeating-linear-gradient(
-    68deg,
-    rgba(154, 188, 255, 0.09) 0 1px,
-    rgba(154, 188, 255, 0) 1px 14px
-  );
-  mix-blend-mode: screen;
-  opacity: 0.2;
-  animation: thread-drift-b 44s linear infinite;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
   background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.28) 100%);
-}
-
-@keyframes thread-drift-a {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-120px, 32px, 0);
-  }
-}
-
-@keyframes thread-drift-b {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(90px, -24px, 0);
-  }
-}
-
-@media (max-width: 768px) {
-  .threads::before,
-  .threads::after {
-    animation: none;
-    opacity: 0.18;
-  }
 }

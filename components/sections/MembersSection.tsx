@@ -29,58 +29,23 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
     <button
       type="button"
       onClick={onClick}
-      className={`${styles.card} w-full text-left ${
-        isDesktop
-          ? "h-[348px] p-5 transition-transform hover:-translate-y-1"
-          : "h-[260px] p-4 sm:h-[272px] sm:p-5"
-      }`}
+      className={`${styles.card} w-full text-left ${isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"}`}
     >
-      <div className={styles.content}>
-      {isDesktop ? (
-        <>
-          <div className="mx-auto h-32 w-32 overflow-hidden rounded-xl border border-white/10 bg-white/8">
-            {hasPhoto ? (
-              <Image
-                src={member.photo ?? ""}
-                alt={member.name}
-                width={128}
-                height={128}
-                className="h-full w-full object-cover object-[50%_14%]"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center font-display text-3xl text-white/70">
-                {initialsFromName(member.name)}
-              </div>
-            )}
+      <div className={styles.media}>
+        {hasPhoto ? (
+          <Image src={member.photo ?? ""} alt={member.name} width={580} height={696} className={styles.mediaImage} />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center font-display text-5xl text-white/68">
+            {initialsFromName(member.name)}
           </div>
-          <div className="mt-5">
-            <h3 className="font-display text-2xl text-white">{member.name}</h3>
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/64">{member.description}</p>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/8 text-white/78 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
-            {hasPhoto ? (
-              <Image
-                src={member.photo ?? ""}
-                alt={member.name}
-                width={48}
-                height={48}
-                className="h-full w-full object-cover object-[50%_14%]"
-              />
-            ) : (
-              <span className="font-display text-lg">{initialsFromName(member.name)}</span>
-            )}
-          </div>
-          <h3 className="font-display text-2xl text-white">{member.name}</h3>
-          <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-white/64">{member.description}</p>
-        </>
-      )}
+        )}
+      </div>
+      <div className={styles.scrim} />
+      <div className={`${styles.content} flex h-full flex-col justify-end`}>
+        <h3 className="font-display text-2xl text-white">{member.name}</h3>
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/72">{member.description}</p>
 
-      {member.isFormer ? (
-        <p className="mt-4 text-xs uppercase tracking-[0.16em] text-rose-200/80">Уже не с нами</p>
-      ) : null}
+        {member.isFormer ? <p className="mt-4 text-xs uppercase tracking-[0.16em] text-rose-200/86">Уже не с нами</p> : null}
       </div>
     </button>
   );

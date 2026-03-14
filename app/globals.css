@@ -71,11 +71,11 @@ body::after {
 }
 
 .marquee-left {
-  animation: marquee-left 48s linear infinite;
+  animation: marquee-left 56s linear infinite;
 }
 
 .marquee-right {
-  animation: marquee-right 48s linear infinite;
+  animation: marquee-right 56s linear infinite;
 }
 
 @keyframes marquee-left {
