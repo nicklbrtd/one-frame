@@ -1,5 +1,4 @@
 import { GradualBlur } from "@/components/animations/GradualBlur";
-import { ColorBends } from "@/components/backgrounds/ColorBends";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
 import { AboutSection } from "@/components/sections/AboutSection";
@@ -20,6 +19,7 @@ export default function Home() {
       <GrainOverlay />
       <FloatingNav links={links} />
       <GradualBlur
+        className="hidden md:block"
         position="top"
         target="page"
         height="4.25rem"
@@ -29,6 +29,7 @@ export default function Home() {
         curve="ease-out"
       />
       <GradualBlur
+        className="hidden md:block"
         position="bottom"
         target="page"
         height="4.75rem"
@@ -39,19 +40,7 @@ export default function Home() {
       />
 
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-20">
-        <ColorBends
-          className="h-full w-full"
-          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
-          rotation={30}
-          speed={0.3}
-          scale={1.2}
-          frequency={1.4}
-          warpStrength={1.2}
-          mouseInfluence={0.8}
-          parallax={0.6}
-          noise={0.08}
-          transparent
-        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,92,122,0.2),transparent_36%),radial-gradient(circle_at_80%_24%,rgba(138,92,255,0.2),transparent_36%),radial-gradient(circle_at_50%_80%,rgba(0,255,209,0.16),transparent_42%),linear-gradient(180deg,#070b12,#05070c)]" />
         <div className="absolute inset-0 bg-black/28" />
       </div>
 

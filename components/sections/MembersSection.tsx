@@ -7,7 +7,6 @@ import { useMemo, useState } from "react";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { copy } from "@/data/copy";
 import { Member, members } from "@/data/members";
 
@@ -26,11 +25,15 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
   const isDesktop = mode === "desktop";
 
   return (
-    <SpotlightCard
-      tint={member.color}
+    <button
+      type="button"
       onClick={onClick}
-      className={isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"}
+      className={`relative w-full overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.92),rgba(9,13,20,0.76))] text-left shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-transform hover:-translate-y-1 ${
+        isDesktop ? "h-[348px] p-5" : "h-[260px] p-4 sm:h-[272px] sm:p-5"
+      }`}
     >
+      <div className="pointer-events-none absolute inset-[1px] rounded-[27px] border border-white/6" />
+      <div className="relative z-10">
       {isDesktop ? (
         <>
           <div className="mx-auto h-32 w-32 overflow-hidden rounded-xl border border-white/10 bg-white/8">
@@ -76,7 +79,8 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       {member.isFormer ? (
         <p className="mt-4 text-xs uppercase tracking-[0.16em] text-rose-200/80">Уже не с нами</p>
       ) : null}
-    </SpotlightCard>
+      </div>
+    </button>
   );
 }
 
