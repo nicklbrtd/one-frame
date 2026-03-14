@@ -6,10 +6,12 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { FinaleSection } from "@/components/sections/FinaleSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { MembersSection } from "@/components/sections/MembersSection";
+import { TeacherSection } from "@/components/sections/TeacherSection";
 
 const links = [
   { id: "home", label: "Главная" },
   { id: "about", label: "О нас" },
+  { id: "teacher", label: "Преподаватель" },
   { id: "members", label: "Участники" },
   { id: "finale", label: "Финал" },
 ];
@@ -49,6 +51,7 @@ export default function Home() {
 
       <HeroSection />
       <AboutSection />
+      <TeacherSection />
       <MembersSection />
       <FinaleSection />
     </main>
