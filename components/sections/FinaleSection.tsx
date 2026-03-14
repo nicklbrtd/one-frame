@@ -11,7 +11,7 @@ export function FinaleSection() {
             {copy.finale.title}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/64 sm:text-lg">{copy.finale.text}</p>
-          <p className="mt-12 text-xs uppercase tracking-[0.24em] text-white/42">П9ИВ 2026</p>
+          <p className="mt-12 text-xs uppercase tracking-[0.24em] text-white/42">ПДИВ 2026</p>
         </div>
       </Reveal>
     </SectionShell>
