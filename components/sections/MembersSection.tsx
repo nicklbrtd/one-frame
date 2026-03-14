@@ -93,6 +93,22 @@ export function MembersSection() {
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const loopMembers = useMemo(() => {
+    const active = members.filter((member) => !member.isFormer);
+    const former = members.filter((member) => member.isFormer);
+    if (former.length === 0 || active.length === 0) return members;
+
+    const buckets: Member[][] = active.map(() => []);
+    for (let index = 0; index < former.length; index += 1) {
+      buckets[index % buckets.length].push(former[index]);
+    }
+
+    const arranged: Member[] = [];
+    for (let index = 0; index < active.length; index += 1) {
+      arranged.push(active[index], ...buckets[index]);
+    }
+    return arranged;
+  }, []);
 
   const selectedMember = useMemo(
     () => members.find((member) => member.id === selectedId) ?? null,
@@ -109,7 +125,7 @@ export function MembersSection() {
 
   useEffect(() => {
     const stage = stageRef.current;
-    if (!stage || members.length === 0) return;
+    if (!stage || loopMembers.length === 0) return;
 
     const config = isDesktopLayout
       ? {
@@ -117,7 +133,7 @@ export function MembersSection() {
           cardHeight: 348,
           rowGap: 20,
           desiredGap: 20,
-          speed: 34,
+          speed: 46,
           minHiddenRunEachSide: 420,
         }
       : {
@@ -125,7 +141,7 @@ export function MembersSection() {
           cardHeight: 172,
           rowGap: 12,
           desiredGap: 12,
-          speed: 28,
+          speed: 38,
           minHiddenRunEachSide: 220,
         };
 
@@ -149,7 +165,7 @@ export function MembersSection() {
     const recalculate = () => {
       stageWidth = stage.clientWidth;
       const visibleRun = Math.max(stageWidth - config.cardWidth, 1);
-      const requiredPerimeter = members.length * (config.cardWidth + config.desiredGap);
+      const requiredPerimeter = loopMembers.length * (config.cardWidth + config.desiredGap);
       const minHorizontalForSpacing = requiredPerimeter / 2 - layout.verticalRun;
       const horizontalRun = Math.max(
         visibleRun + config.minHiddenRunEachSide * 2,
@@ -161,7 +177,7 @@ export function MembersSection() {
       layout.leftX = -hiddenRunEachSide;
       layout.rightX = visibleRun + hiddenRunEachSide;
       layout.perimeter = 2 * (layout.horizontalRun + layout.verticalRun);
-      layout.spacing = layout.perimeter / members.length;
+      layout.spacing = layout.perimeter / loopMembers.length;
       stage.style.height = `${layout.stageHeight}px`;
     };
 
@@ -193,7 +209,7 @@ export function MembersSection() {
       previousTimestamp = timestamp;
       offset += config.speed * deltaSeconds;
 
-      for (let index = 0; index < members.length; index += 1) {
+      for (let index = 0; index < loopMembers.length; index += 1) {
         const card = itemRefs.current[index];
         if (!card) continue;
         const baseDistance = index * layout.spacing;
@@ -216,7 +232,7 @@ export function MembersSection() {
       window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
     };
-  }, [isDesktopLayout]);
+  }, [isDesktopLayout, loopMembers]);
 
   const cardWidth = isDesktopLayout ? 290 : 152;
   const cardMode: CardMode = isDesktopLayout ? "desktop" : "mobile";
@@ -236,7 +252,7 @@ export function MembersSection() {
         <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#06090f] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
 
         <div ref={stageRef} className={styles.loopStage}>
-          {members.map((member, index) => (
+          {loopMembers.map((member, index) => (
             <div
               key={member.id}
               ref={(node) => {
