@@ -235,7 +235,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-6 font-display text-balance text-[4.9rem] leading-[0.82] tracking-[0.03em] text-transparent [text-shadow:0_8px_32px_rgba(0,0,0,0.55)] [background:linear-gradient(180deg,#f8fbff_0%,#d8e4f7_72%,#afc2e4_100%)] [background-clip:text] sm:text-[7rem] lg:text-[8.6rem]"
+                className="mt-6 font-display text-balance text-[4.9rem] leading-[0.82] tracking-[0.03em] text-[#edf3ff] [text-shadow:0_8px_30px_rgba(0,0,0,0.62)] sm:text-[7rem] lg:text-[8.6rem]"
               >
                 {copy.hero.title}
               </motion.h1>
@@ -317,32 +317,40 @@ export function HeroSection() {
                   <span>24 fps</span>
                 </div>
 
-                <div className="absolute inset-x-4 bottom-4 grid grid-cols-2 gap-2">
-                  <div className="relative h-24 overflow-hidden rounded-lg border border-white/14 bg-black/30">
+                <div className="absolute inset-x-4 bottom-4 grid auto-rows-[96px] grid-cols-2 gap-2">
+                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/30">
                     <Image
                       src="/members/nikita.png"
                       alt="Кадр участника"
                       fill
                       sizes="(max-width: 1024px) 35vw, 180px"
-                      className="object-cover object-top opacity-80"
+                      className="object-cover object-[50%_16%] opacity-[0.82]"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.36))]" />
                   </div>
-                  <div className="flex h-24 flex-col justify-between rounded-lg border border-white/14 bg-white/[0.04] p-2">
+                  <div className="flex flex-col justify-between rounded-lg border border-white/14 bg-white/[0.04] p-2.5">
                     <p className="text-[9px] uppercase tracking-[0.2em] text-white/54">Scene 03</p>
                     <p className="font-display text-lg leading-none text-white/86">light study</p>
                     <p className="text-[9px] uppercase tracking-[0.18em] text-white/46">memory frame</p>
                   </div>
-                  <div className="flex h-20 items-end rounded-lg border border-white/14 bg-[linear-gradient(140deg,rgba(255,226,177,0.1),rgba(93,129,201,0.14))] p-2">
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-white/56">contact sheet</p>
+                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/28">
+                    <Image
+                      src="/members/sonya-m.png"
+                      alt="Кадр участника"
+                      fill
+                      sizes="(max-width: 1024px) 35vw, 180px"
+                      className="object-cover object-[50%_14%] opacity-70 grayscale-[18%]"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(130deg,rgba(255,222,173,0.12),rgba(66,101,170,0.16))]" />
+                    <p className="absolute bottom-2 left-2 text-[9px] uppercase tracking-[0.18em] text-white/68">contact sheet</p>
                   </div>
-                  <div className="relative h-20 overflow-hidden rounded-lg border border-white/14 bg-black/26">
+                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/26">
                     <Image
                       src="/members/varya.png"
                       alt="Кадр участника"
                       fill
                       sizes="(max-width: 1024px) 35vw, 180px"
-                      className="object-cover object-top opacity-70 grayscale-[25%]"
+                      className="object-cover object-[50%_16%] opacity-72 grayscale-[22%]"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(130deg,rgba(50,94,170,0.26),rgba(181,55,78,0.2))]" />
                   </div>
