@@ -1,0 +1,143 @@
+.container {
+  pointer-events: none;
+  position: fixed;
+  left: 0.6rem;
+  top: 5.8rem;
+  bottom: 1.4rem;
+  z-index: 56;
+  width: 68px;
+}
+
+.track {
+  position: absolute;
+  left: 27px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 239, 220, 0.08) 0%,
+    rgba(104, 64, 146, 0.14) 28%,
+    rgba(58, 110, 222, 0.2) 62%,
+    rgba(227, 66, 93, 0.12) 100%
+  );
+  border-radius: 999px;
+}
+
+.step {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transform-origin: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.stepLeft {
+  transform: translateX(-2px);
+}
+
+.stepRight {
+  transform: translateX(2px);
+}
+
+.print {
+  display: block;
+  width: 11px;
+  height: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(247, 239, 220, 0.18);
+  background: rgba(247, 239, 220, 0.1);
+  box-shadow: 0 0 0 0 rgba(59, 110, 226, 0);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.printMain {
+  transform: rotate(-17deg);
+}
+
+.printSecondary {
+  transform: rotate(13deg);
+}
+
+.printPassed {
+  border-color: rgba(247, 239, 220, 0.44);
+  background: linear-gradient(130deg, rgba(230, 68, 95, 0.34), rgba(67, 114, 224, 0.38));
+}
+
+.printActive {
+  border-color: rgba(247, 239, 220, 0.75);
+  background: linear-gradient(135deg, rgba(237, 84, 108, 0.62), rgba(83, 132, 238, 0.68));
+  box-shadow: 0 0 14px rgba(80, 127, 233, 0.42);
+}
+
+.printIdle {
+  animation: printPulse 1.7s ease-in-out infinite;
+}
+
+.ghost {
+  position: absolute;
+  left: 18px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
+
+.ghostCore {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(239, 92, 115, 0.92), rgba(98, 146, 245, 0.94));
+  box-shadow: 0 0 16px rgba(89, 139, 243, 0.52);
+}
+
+.ghostCoreOrbit {
+  animation: orbit 2.6s linear infinite;
+}
+
+@keyframes printPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(89, 139, 243, 0.12);
+    filter: saturate(1);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(89, 139, 243, 0.34);
+    filter: saturate(1.08);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(4px, -3px);
+  }
+  50% {
+    transform: translate(0, -6px);
+  }
+  75% {
+    transform: translate(-4px, -3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 1023px) {
+  .container {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .print,
+  .ghostCore {
+    transition: none;
+    animation: none;
+  }
+}

@@ -14,7 +14,7 @@ const supportLines = [
   "Каждый проект мы проживаем вместе: от идеи до финального кадра.",
 ];
 
-const moodTags = ["свет", "кадр", "движение", "лица", "время"];
+const moodTags = ["Посвят", "ЯТД", "Анекдот", "Практика", "Курсовая"];
 
 export function AboutSection() {
   const [enableVariableProximity, setEnableVariableProximity] = useState(false);

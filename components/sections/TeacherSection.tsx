@@ -63,9 +63,9 @@ export function TeacherSection() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
-                <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">ведет кадр</span>
-                <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">чувствует свет</span>
-                <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">собирает историю</span>
+                <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">поднятие флага</span>
+                <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">разговоры о важном</span>
+                <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">докладная</span>
               </div>
             </div>
           </div>

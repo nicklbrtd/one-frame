@@ -238,8 +238,8 @@ export function MembersSection() {
 
       <Reveal delay={0.06} className="mt-6">
         <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
-          <span className="border border-[#f6efdc]/44 bg-[#173061]/80 px-3 py-1 text-[#f8f1df]">верхняя лента: в кадре сейчас</span>
-          <span className="border border-[#f6efdc]/44 bg-[#6a2638]/80 px-3 py-1 text-[#fff3df]">нижняя лента: часть нашей истории</span>
+          <span className="border border-[#f6efdc]/44 bg-[#173061]/80 px-3 py-1 text-[#f8f1df]">кто-то есть</span>
+          <span className="border border-[#f6efdc]/44 bg-[#6a2638]/80 px-3 py-1 text-[#fff3df]">кого-то нет</span>
         </div>
       </Reveal>
 

@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { copy } from "@/data/copy";
 
-const tags = ["сцена 01", "кадр 67", "настроение", "REC", "архив"];
+const tags = ["сцена 3", "кадр 67", "Седых", "REC", "Лебедев??"];
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 export function HeroSection() {
@@ -119,15 +119,6 @@ export function HeroSection() {
                 ))}
               </ul>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.48, delay: 0.25 }}
-                className="mt-12 inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-[#f5efdd]/74"
-              >
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#f5efdd]/46">↓</span>
-                к следующему кадру
-              </motion.div>
             </div>
           </RevealBlock>
 
@@ -141,7 +132,7 @@ export function HeroSection() {
             <div className="relative h-[28rem] sm:h-[32rem]">
               <article className="absolute left-[4%] top-[2%] h-[78%] w-[72%] rotate-[-2deg] overflow-hidden border-2 border-[#f6efdb]/55 bg-[#121a32] shadow-[8px_10px_0_rgba(6,8,16,0.5)]">
                 <Image
-                  src="/members/maksim.png"
+                  src="/members/nikita.png"
                   alt="Портрет участника"
                   fill
                   priority
@@ -170,8 +161,8 @@ export function HeroSection() {
               </article>
 
               <article className="absolute right-[12%] bottom-[4%] h-[31%] w-[44%] rotate-[-3deg] border-2 border-[#f7f0dd]/46 bg-[#f2e4c6]/92 p-3 text-[#1f2230] shadow-[6px_7px_0_rgba(6,8,16,0.42)]">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">заметка</p>
-                <p className="mt-2 font-display text-[1.65rem] uppercase leading-[0.9]">снимаем не только кадры, но и время</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">столовая заметка</p>
+                <p className="mt-2 font-display text-[1.65rem] uppercase leading-[0.9]">А можно нам двойную?</p>
               </article>
 
               <motion.div
@@ -207,7 +198,7 @@ export function HeroSection() {
                   <div className="absolute inset-x-[14px] inset-y-[18px] grid grid-cols-3 gap-1.5">
                     <div className="relative overflow-hidden border border-[#f7f0df]/24">
                       <Image
-                        src="/members/varya.png"
+                        src="/members/maksim.png"
                         alt="Пленка"
                         fill
                         sizes="110px"
@@ -216,15 +207,21 @@ export function HeroSection() {
                     </div>
                     <div className="relative overflow-hidden border border-[#f7f0df]/24">
                       <Image
-                        src="/members/nikita.png"
+                        src="/members/alisa.png"
                         alt="Пленка"
                         fill
                         sizes="110px"
                         className="object-cover object-[50%_12%]"
                       />
                     </div>
-                    <div className="flex items-end border border-[#f7f0df]/24 bg-[#17244a] p-1.5">
-                      <p className="text-[7px] uppercase tracking-[0.16em] text-[#f5e9cc]">кадр 67</p>
+                    <div className="relative overflow-hidden border border-[#f7f0df]/24">
+                      <Image
+                        src="/members/varya.png"
+                        alt="Пленка"
+                        fill
+                        sizes="110px"
+                        className="object-cover object-[50%_16%]"
+                      />
                     </div>
                   </div>
                 </motion.div>

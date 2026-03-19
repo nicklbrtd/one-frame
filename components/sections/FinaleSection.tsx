@@ -23,9 +23,9 @@ export function FinaleSection() {
           </p>
 
           <div className="relative mt-12 flex flex-wrap items-center justify-center gap-2 text-[10px] uppercase tracking-[0.16em]">
-            <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">одна группа</span>
-            <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">одно время</span>
-            <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">одна память</span>
+            <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">си кс</span>
+            <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">се ве</span>
+            <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">нн нн</span>
           </div>
 
           <p className="relative mt-12 text-[10px] uppercase tracking-[0.34em] text-[#f7f0dd]/52">ПДИВ 2026</p>

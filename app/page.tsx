@@ -1,6 +1,7 @@
 import { ThreadsBackground } from "@/components/backgrounds/ThreadsBackground";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
+import { ScrollSteps } from "@/components/layout/ScrollSteps";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { AtmosphereSection } from "@/components/sections/AtmosphereSection";
 import { FinaleSection } from "@/components/sections/FinaleSection";
@@ -11,7 +12,7 @@ import { TeacherSection } from "@/components/sections/TeacherSection";
 const links = [
   { id: "home", label: "Начало" },
   { id: "about", label: "Кто мы" },
-  { id: "manifest", label: "Манифест" },
+  { id: "impact", label: "Вспышка" },
   { id: "teacher", label: "Преп." },
   { id: "members", label: "Состав" },
   { id: "finale", label: "Финал" },
@@ -24,6 +25,7 @@ export default function Home() {
         <GrainOverlay />
       </div>
       <FloatingNav links={links} />
+      <ScrollSteps />
 
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-20">
         <ThreadsBackground amplitude={0.9} distance={0.12} enableMouseInteraction />
