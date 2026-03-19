@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
-import { DoodleArrow, DoodleCircle, DoodleStar } from "@/components/ui/Doodles";
+import { DoodleArrow, DoodleStar } from "@/components/ui/Doodles";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { copy } from "@/data/copy";
@@ -47,9 +47,8 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#070914f0] via-[#0709147f] to-transparent" />
 
-        <div className="relative z-10 flex h-full flex-col justify-end px-3 pb-3 pt-2">
+        <div className="relative z-10 flex h-full items-end px-3 pb-3 pt-2">
           <h3 className="truncate font-display text-[1rem] uppercase leading-none tracking-[0.04em] text-[#f8f1df]">{member.name}</h3>
-          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-[#f7f0dd]/84">{member.description}</p>
         </div>
       </button>
     );
@@ -67,7 +66,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
         )}
       </div>
       <div className={styles.scrim} />
-      <div className={`${styles.content} flex h-full flex-col justify-end`}>
+      <div className={`${styles.content} flex h-full items-end`}>
         {member.isFormer ? (
           <p className="absolute right-3 top-3 -rotate-[1.8deg] border border-[#f6efdc]/46 bg-[#6d2537]/86 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
             Часть истории
@@ -75,7 +74,6 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
         ) : null}
 
         <h3 className="max-w-[86%] truncate font-display text-xl uppercase leading-none tracking-[0.04em] text-[#f8f1df]">{member.name}</h3>
-        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-[#f7f0dd]/84">{member.description}</p>
       </div>
     </button>
   );
@@ -241,12 +239,6 @@ export function MembersSection() {
         <div className="relative flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
           <span className="border border-[#f6efdc]/44 bg-[#173061]/80 px-3 py-1 text-[#f8f1df]">кто-то есть</span>
           <span className="border border-[#f6efdc]/44 bg-[#6a2638]/80 px-3 py-1 text-[#fff3df]">кого-то нет</span>
-          <DoodleArrow
-            className="pointer-events-none absolute -right-8 -top-4 hidden h-12 w-28 rotate-[6deg] lg:block"
-            color="rgba(244, 233, 208, 0.65)"
-            delay={0.2}
-            duration={0.95}
-          />
         </div>
       </Reveal>
 
@@ -259,11 +251,17 @@ export function MembersSection() {
         <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.15] [background-image:radial-gradient(circle,rgba(247,239,220,0.9)_0.7px,transparent_0.9px)] [background-size:8px_8px]" />
         <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060710] via-[#060710d9] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
         <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060710] via-[#060710d9] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
-        <DoodleCircle
-          className="pointer-events-none absolute right-[16%] top-[16%] z-20 hidden h-40 w-40 lg:block"
-          color="rgba(235, 228, 207, 0.48)"
-          delay={0.22}
-          duration={1.2}
+        <DoodleArrow
+          className="pointer-events-none absolute -left-6 top-8 z-20 hidden h-14 w-32 rotate-[18deg] lg:block"
+          color="rgba(238, 227, 199, 0.62)"
+          delay={0.2}
+          duration={0.98}
+        />
+        <DoodleArrow
+          className="pointer-events-none absolute -right-8 bottom-12 z-20 hidden h-14 w-32 rotate-[196deg] lg:block"
+          color="rgba(238, 227, 199, 0.58)"
+          delay={0.28}
+          duration={1.02}
         />
         <DoodleStar
           className="pointer-events-none absolute left-[22%] top-[70%] z-20 hidden h-8 w-8 lg:block"
@@ -324,7 +322,6 @@ export function MembersSection() {
                 )}
               </div>
               <h3 className="mt-4 font-display text-5xl uppercase tracking-[0.03em] text-[#f8f1df]">{selectedMember.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-[#f7f0dd]/78">{selectedMember.description}</p>
 
               {selectedMember.isFormer ? (
                 <div className="mt-6 inline-flex -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-3 py-2 text-sm uppercase tracking-[0.14em] text-[#fff3df]">

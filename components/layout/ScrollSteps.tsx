@@ -16,8 +16,8 @@ type Step = {
   phase: number;
 };
 
-const STEP_COUNT = 64;
-const TRAIL_LENGTH = 14;
+const STEP_COUNT = 46;
+const TRAIL_LENGTH = 10.5;
 const IDLE_DELAY_MS = 1200;
 const SIDE_BAND = 18;
 
@@ -32,10 +32,19 @@ const seeded = (input: number) => {
 const buildSteps = (): Step[] => {
   const steps: Step[] = [];
   let drift = 0;
+  let progressCursor = 0;
+  const rawY: number[] = [];
+
+  for (let i = 0; i < STEP_COUNT; i += 1) {
+    rawY.push(progressCursor);
+    progressCursor += 1 + (seeded(i + 121) - 0.5) * 0.28;
+  }
+
+  const maxY = rawY[rawY.length - 1] || 1;
 
   for (let i = 0; i < STEP_COUNT; i += 1) {
     const side: -1 | 1 = i % 2 === 0 ? -1 : 1;
-    const yRatio = i / (STEP_COUNT - 1);
+    const yRatio = rawY[i] / maxY;
     const driftJitter = (seeded(i + 9) - 0.5) * 2.8;
 
     drift = clamp(drift + driftJitter, -8, 8);

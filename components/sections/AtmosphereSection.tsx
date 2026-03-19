@@ -96,24 +96,24 @@ export function AtmosphereSection() {
             className="absolute left-[5%] top-[14%] w-[min(25rem,78vw)] border-2 border-[#f6efdc]/44 bg-[#173061]/78 p-4 text-[#f8f1df] shadow-[5px_6px_0_rgba(7,9,18,0.46)]"
             style={shouldReduceMotion ? undefined : { y: cardA.y, rotate: cardA.rotate }}
           >
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#f8f1df]/74">вспышка</p>
-            <p className="mt-2 font-display text-3xl uppercase leading-[0.92]">Крути страницу - и кадр оживает.</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#f8f1df]/74">мысль</p>
+            <p className="mt-2 font-display text-3xl uppercase leading-[0.92]">Лестница - странное место.</p>
           </motion.article>
 
           <motion.article
             className="absolute right-[6%] top-[18%] w-[min(20rem,66vw)] border-2 border-[#f6efdc]/42 bg-[#692537]/78 p-4 text-[#fff3df] shadow-[5px_6px_0_rgba(7,9,18,0.46)]"
             style={shouldReduceMotion ? undefined : { y: cardB.y, rotate: cardB.rotate }}
           >
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#fff3df]/72">момент</p>
-            <p className="mt-2 text-sm leading-relaxed sm:text-base">Тут свет, движение и лица собираются в один нервный, живой ритм.</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#fff3df]/72">Объявление</p>
+            <p className="mt-2 text-sm leading-relaxed sm:text-base">Куплю телевик кричи я.</p>
           </motion.article>
 
           <motion.article
             className="absolute bottom-[10%] right-[14%] w-[min(22rem,72vw)] border-2 border-[#f6efdc]/44 bg-[#f2e4c6]/92 p-4 text-[#1f2230] shadow-[5px_6px_0_rgba(7,9,18,0.42)]"
             style={shouldReduceMotion ? undefined : { y: cardC.y, rotate: cardC.rotate }}
           >
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">пометка</p>
-            <p className="mt-2 font-display text-3xl uppercase leading-[0.9]">Сцена меняется от твоего скролла</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">Мысль</p>
+            <p className="mt-2 font-display text-3xl uppercase leading-[0.9]">Говорят да поговаривают, что в этой группе есть староста, который не ходит на пары. Надеюсь это фейк</p>
           </motion.article>
 
           <div className="absolute bottom-6 left-6 right-6 flex flex-wrap gap-2">

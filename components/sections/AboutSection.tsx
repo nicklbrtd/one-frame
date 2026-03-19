@@ -10,9 +10,9 @@ import { VariableProximity } from "@/components/ui/VariableProximity";
 import { copy } from "@/data/copy";
 
 const supportLines = [
-  "Мы разные по характеру, но в кадре звучим как одна команда.",
-  "Фотография и видео для нас - способ удержать момент и услышать друг друга.",
-  "Каждый проект мы проживаем вместе: от идеи до финального кадра.",
+  "Придти ли завтра на пары?",
+  "А что если отчислиться и уехать в другую страну?",
+  "Курсовая же будет легче практики, верно?",
 ];
 
 const moodTags = ["Посвят", "ЯТД", "Анекдот", "Практика", "Курсовая"];
@@ -46,7 +46,7 @@ export function AboutSection() {
             <div className="relative">
               {enableVariableProximity ? (
                 <VariableProximity
-                  label="Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет."
+                  label="Напоминаю, что мы те, кто не сняли посвященеи на первом курсе."
                   fromFontVariationSettings="'wght' 450, 'opsz' 14"
                   toFontVariationSettings="'wght' 900, 'opsz' 80"
                   falloff="gaussian"
@@ -55,7 +55,7 @@ export function AboutSection() {
                 />
               ) : (
                 <p className="relative mt-5 max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl">
-                  Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет.
+                  Напоминаю, что мы те, кто не сняли посвященеи на первом курсе.
                 </p>
               )}
               <DoodleUnderline
@@ -67,8 +67,7 @@ export function AboutSection() {
             </div>
 
             <p className="relative mt-5 max-w-xl text-sm leading-relaxed text-[#f7f0dc]/72 sm:text-base">
-              Нам важны не идеальные позы, а живые эмоции, честные лица и чувство времени, которое остается
-              после просмотра.
+              Я считаю, что нельзя, чтобы было так, что люди одинаковые. Мы же не на фудкорте.
             </p>
 
             <ul className="relative mt-6 flex flex-wrap gap-2">
