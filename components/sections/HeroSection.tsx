@@ -20,23 +20,29 @@ export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
   const [allowHeroMotion, setAllowHeroMotion] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
+
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const smoothPointerX = useSpring(pointerX, { stiffness: 46, damping: 20, mass: 0.9 });
-  const smoothPointerY = useSpring(pointerY, { stiffness: 46, damping: 20, mass: 0.9 });
+  const smoothPointerX = useSpring(pointerX, { stiffness: 42, damping: 22, mass: 0.9 });
+  const smoothPointerY = useSpring(pointerY, { stiffness: 42, damping: 22, mass: 0.9 });
+
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const filmMouseX = useTransform(smoothPointerX, [-1, 1], [-12, 12]);
-  const filmMouseY = useTransform(smoothPointerY, [-1, 1], [-8, 8]);
-  const filmScrollY = useTransform(scrollYProgress, [0, 1], [0, 128]);
-  const filmScrollRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
+
+  const collageX = useTransform(smoothPointerX, [-1, 1], [-8, 8]);
+  const collageY = useTransform(smoothPointerY, [-1, 1], [-6, 6]);
+
+  const filmMouseX = useTransform(smoothPointerX, [-1, 1], [-10, 10]);
+  const filmMouseY = useTransform(smoothPointerY, [-1, 1], [-7, 7]);
+  const filmScrollY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const filmScrollRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
   const filmX = useTransform(() => filmMouseX.get());
   const filmY = useTransform(() => filmMouseY.get() + filmScrollY.get());
   const filmRotate = useTransform(
-    () => 7 + filmScrollRotate.get() + smoothPointerX.get() * 2.1 + smoothPointerY.get() * -1.3,
+    () => -7 + filmScrollRotate.get() + smoothPointerX.get() * 1.8 + smoothPointerY.get() * -1.1,
   );
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
     const sync = () => setAllowHeroMotion(mediaQuery.matches);
     sync();
     mediaQuery.addEventListener("change", sync);
@@ -72,309 +78,206 @@ export function HeroSection() {
   }, [allowHeroMotion, pointerX, pointerY, shouldReduceMotion]);
 
   return (
-    <section ref={heroRef} id="home" className="relative flex min-h-screen items-center overflow-hidden pt-24">
-      <div className="absolute inset-0 -z-20">
+    <section ref={heroRef} id="home" className="relative flex min-h-[96vh] items-center overflow-hidden pt-28 pb-16 sm:pb-20">
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <motion.div
-          className="absolute -left-20 top-0 h-[24rem] w-[24rem] rounded-full bg-[#c53d54]/34 blur-[124px]"
+          className="absolute left-[-11%] top-[4%] h-[24rem] w-[24rem] rounded-full bg-[#bf3449]/30 blur-[116px]"
           animate={
             shouldReduceMotion || !allowHeroMotion
               ? undefined
               : {
-                  y: [0, -20, 0],
-                  x: [0, 18, 0],
-                }
-          }
-          transition={{ duration: 12.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-[-7%] top-[14%] h-[26rem] w-[26rem] rounded-full bg-[#3469b8]/30 blur-[136px]"
-          animate={
-            shouldReduceMotion || !allowHeroMotion
-              ? undefined
-              : {
-                  y: [0, 24, 0],
-                  x: [0, -20, 0],
-                }
-          }
-          transition={{ duration: 15.8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-[-18%] left-[24%] h-[22rem] w-[22rem] rounded-full bg-[#7a1629]/32 blur-[144px]"
-          animate={
-            shouldReduceMotion || !allowHeroMotion
-              ? undefined
-              : {
+                  x: [0, 16, 0],
                   y: [0, -18, 0],
-                  scale: [1, 1.06, 1],
-                }
-          }
-          transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-[18%] top-[20%] h-[18rem] w-[18rem] rounded-full bg-[#f0ad6d]/10 blur-[118px]"
-          animate={
-            shouldReduceMotion || !allowHeroMotion
-              ? undefined
-              : {
-                  opacity: [0.28, 0.45, 0.28],
-                  scale: [1, 1.08, 1],
                 }
           }
           transition={{ duration: 13.5, repeat: Infinity, ease: "easeInOut" }}
         />
+        <motion.div
+          className="absolute right-[-10%] top-[10%] h-[26rem] w-[26rem] rounded-full bg-[#355fa8]/28 blur-[128px]"
+          animate={
+            shouldReduceMotion || !allowHeroMotion
+              ? undefined
+              : {
+                  x: [0, -14, 0],
+                  y: [0, 20, 0],
+                }
+          }
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute left-[34%] top-[10%] h-[17rem] w-[17rem] rounded-full bg-[#e6b078]/10 blur-[110px]"
+          animate={
+            shouldReduceMotion || !allowHeroMotion
+              ? undefined
+              : {
+                  scale: [1, 1.07, 1],
+                  opacity: [0.24, 0.42, 0.24],
+                }
+          }
+          transition={{ duration: 10.8, repeat: Infinity, ease: "easeInOut" }}
+        />
       </div>
 
-      <div className="mx-auto w-[min(1140px,92vw)]">
-        <motion.article
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative overflow-hidden rounded-[36px] border border-white/14 bg-[linear-gradient(158deg,rgba(10,13,23,0.92),rgba(8,11,20,0.82))] shadow-[0_38px_130px_rgba(0,0,0,0.62)] backdrop-blur-xl"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(205,62,84,0.2),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(56,101,180,0.2),transparent_38%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(255,211,167,0.04)_0%,transparent_48%),linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.34)_85%)]" />
-          <div className="pointer-events-none absolute inset-0 opacity-[0.15] [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.18)_0.7px,transparent_0.9px)] [background-size:7px_7px]" />
-          <div className="pointer-events-none absolute inset-[1px] rounded-[35px] border border-white/[0.09]" />
-
-          <div className="pointer-events-none absolute left-5 top-5 hidden h-[74%] w-9 rounded-full border border-white/12 bg-black/22 lg:flex lg:flex-col lg:items-center lg:justify-between lg:py-3">
-            {Array.from({ length: 9 }).map((_, index) => (
-              <span key={`film-left-${index}`} className="h-2.5 w-2.5 rounded-[3px] bg-[#05070d]/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]" />
-            ))}
-          </div>
-          <div className="pointer-events-none absolute right-5 bottom-5 hidden h-[74%] w-9 rounded-full border border-white/12 bg-black/22 lg:flex lg:flex-col lg:items-center lg:justify-between lg:py-3">
-            {Array.from({ length: 9 }).map((_, index) => (
-              <span key={`film-right-${index}`} className="h-2.5 w-2.5 rounded-[3px] bg-[#05070d]/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]" />
-            ))}
-          </div>
-
-          <div className="pointer-events-none absolute left-10 top-10 h-6 w-6 border-l border-t border-white/30" />
-          <div className="pointer-events-none absolute right-10 top-10 h-6 w-6 border-r border-t border-white/30" />
-          <div className="pointer-events-none absolute bottom-10 left-10 h-6 w-6 border-b border-l border-white/30" />
-          <div className="pointer-events-none absolute bottom-10 right-10 h-6 w-6 border-b border-r border-white/30" />
-
+      <div className="mx-auto w-[min(1180px,92vw)]">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-8 xl:gap-12">
           <motion.div
-            aria-hidden
-            className="pointer-events-none absolute right-[11%] top-[19%] z-[6] hidden lg:block"
-            style={shouldReduceMotion ? undefined : { x: filmX, y: filmY, rotate: filmRotate }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-10 max-w-2xl"
           >
+            <p className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-white/68">
+              <span className="h-px w-10 bg-gradient-to-r from-[#d44358] to-transparent" />
+              {copy.hero.kicker}
+            </p>
+
+            <h1 className="mt-6 font-display text-[4.8rem] leading-[0.84] tracking-[0.04em] text-[#f2f6ff] [text-shadow:0_12px_34px_rgba(0,0,0,0.56)] sm:text-[6.6rem] lg:text-[8.6rem]">
+              {copy.hero.title}
+            </h1>
+
+            <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-white/78 sm:text-[1.28rem]">
+              {copy.hero.subtitle}
+            </p>
+
+            <ul className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.24em] text-white/56">
+              {poeticKeywords.map((item, index) => (
+                <li key={item} className="inline-flex items-center gap-2">
+                  {index > 0 ? <span className="h-[3px] w-[3px] rounded-full bg-white/34" /> : null}
+                  {item}
+                </li>
+              ))}
+            </ul>
+
             <motion.div
-              animate={
-                shouldReduceMotion || !allowHeroMotion
-                  ? undefined
-                  : {
-                      y: [0, -4, 0],
-                      rotate: [0, 0.7, 0],
-                    }
-              }
-              transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative h-[112px] w-[254px] overflow-hidden rounded-[17px] border border-white/18 bg-[linear-gradient(160deg,rgba(13,16,27,0.9),rgba(9,12,20,0.78))] shadow-[0_26px_64px_rgba(0,0,0,0.5)] backdrop-blur-lg"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.76, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-14 flex items-center gap-4"
             >
-              <div className="absolute inset-x-0 top-0 z-10 h-[18px] border-b border-white/12 bg-black/34" />
-              <div className="absolute inset-x-0 bottom-0 z-10 h-[18px] border-t border-white/12 bg-black/34" />
-              <div className="absolute inset-x-[14px] top-[4px] z-20 flex items-center justify-between">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <span
-                    key={`film-top-hole-${index}`}
-                    className="h-[5px] w-[9px] rounded-[2px] bg-[#05070d]/88 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
-                  />
-                ))}
-              </div>
-              <div className="absolute inset-x-[14px] bottom-[4px] z-20 flex items-center justify-between">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <span
-                    key={`film-bottom-hole-${index}`}
-                    className="h-[5px] w-[9px] rounded-[2px] bg-[#05070d]/88 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
-                  />
-                ))}
-              </div>
-
-              <div className="absolute inset-x-[16px] inset-y-[22px] grid grid-cols-3 gap-1.5">
-                <div className="relative overflow-hidden rounded-md border border-white/10 bg-black/24">
-                  <Image
-                    src="/members/nikita.png"
-                    alt="Фрагмент пленки"
-                    fill
-                    sizes="160px"
-                    className="object-cover object-top grayscale-[14%]"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(130deg,rgba(69,108,183,0.18),rgba(175,54,76,0.16))]" />
-                </div>
-                <div className="relative overflow-hidden rounded-md border border-white/10 bg-black/26">
-                  <Image
-                    src="/members/varya.png"
-                    alt="Фрагмент пленки"
-                    fill
-                    sizes="160px"
-                    className="object-cover object-top grayscale-[32%]"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,215,164,0.14),rgba(66,101,170,0.18))]" />
-                </div>
-                <div className="flex flex-col justify-between rounded-md border border-white/10 bg-white/[0.04] p-1.5">
-                  <p className="text-[7px] uppercase tracking-[0.16em] text-white/50">frame 27</p>
-                  <p className="font-display text-sm leading-none text-white/84">memory</p>
-                  <p className="text-[7px] uppercase tracking-[0.15em] text-white/45">24 fps</p>
-                </div>
-              </div>
-
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.36)_88%)]" />
+              <motion.div
+                className="h-px w-16 bg-gradient-to-r from-[#d13d50] to-white/22"
+                animate={
+                  shouldReduceMotion || !allowHeroMotion ? undefined : { opacity: [0.45, 0.95, 0.45] }
+                }
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <p className="text-xs uppercase tracking-[0.3em] text-white/52">Прокрутите вниз</p>
             </motion.div>
           </motion.div>
 
-          <div className="relative z-10 grid gap-10 p-7 sm:p-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.96fr)] lg:items-end lg:p-14">
-            <div>
-              <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.64, delay: 0.07, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-flex rounded-full border border-[#f0a8b6]/32 bg-[#751a2c]/30 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[#ffe8ef]"
-              >
-                {copy.hero.kicker}
-              </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.92, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto w-full max-w-[520px]"
+            style={shouldReduceMotion ? undefined : { x: collageX, y: collageY }}
+          >
+            <div className="relative h-[27rem] overflow-visible sm:h-[31rem]">
+              <article className="absolute inset-0 overflow-hidden rounded-[30px] bg-[linear-gradient(160deg,rgba(13,16,26,0.9),rgba(9,11,20,0.74))] shadow-[0_32px_110px_rgba(0,0,0,0.56)]">
+                <Image
+                  src="/members/maksim.png"
+                  alt="Портрет участника"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 540px"
+                  className="object-cover object-[50%_12%]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(206,62,84,0.2),transparent_38%,rgba(56,96,175,0.22)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_24%,rgba(0,0,0,0.2)_62%,rgba(0,0,0,0.6)_100%)]" />
 
-              <motion.h1
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-6 font-display text-balance text-[4.9rem] leading-[0.82] tracking-[0.03em] text-[#edf3ff] [text-shadow:0_8px_30px_rgba(0,0,0,0.62)] sm:text-[7rem] lg:text-[8.6rem]"
-              >
-                {copy.hero.title}
-              </motion.h1>
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/62">Visual Storytelling Group</p>
+                  <p className="mt-2 max-w-xs font-display text-3xl leading-[0.94] tracking-[0.02em] text-white sm:text-[2.2rem]">
+                    кадры, в которых живет характер
+                  </p>
+                </div>
+              </article>
 
-              <motion.p
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.86, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-white/76 sm:text-xl"
-              >
-                {copy.hero.subtitle}
-              </motion.p>
+              <article className="absolute -left-4 bottom-[14%] h-[9.8rem] w-[11.4rem] overflow-hidden rounded-2xl bg-black/50 shadow-[0_16px_40px_rgba(0,0,0,0.45)] sm:w-[12.4rem]">
+                <Image
+                  src="/members/anya.png"
+                  alt="Фрагмент серии"
+                  fill
+                  sizes="220px"
+                  className="object-cover object-[50%_12%]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(125deg,rgba(229,184,119,0.24),rgba(64,102,174,0.2))]" />
+                <p className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.18em] text-white/72">contact sheet</p>
+              </article>
 
-              <motion.ul
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.76, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2"
-              >
-                {poeticKeywords.map((item, index) => (
-                  <li
-                    key={item}
-                    className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-white/58"
-                  >
-                    {index > 0 ? <span className="h-[3px] w-[3px] rounded-full bg-white/38" /> : null}
-                    {item}
-                  </li>
-                ))}
-              </motion.ul>
+              <article className="absolute right-0 top-[6%] flex h-[8.4rem] w-[12.2rem] flex-col justify-between rounded-2xl bg-[linear-gradient(145deg,rgba(13,16,26,0.84),rgba(11,13,22,0.52))] p-3 shadow-[0_16px_36px_rgba(0,0,0,0.42)] sm:w-[13.4rem]">
+                <p className="text-[9px] uppercase tracking-[0.18em] text-white/52">scene 04</p>
+                <p className="font-display text-2xl leading-none text-white/88">light study</p>
+                <p className="text-[9px] uppercase tracking-[0.18em] text-white/48">REC 00:03:12:08</p>
+              </article>
 
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.76, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-10 inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-white/62"
+                aria-hidden
+                className="pointer-events-none absolute -right-6 top-[-4%] hidden md:block"
+                style={
+                  shouldReduceMotion ? undefined : { x: filmX, y: filmY, rotate: filmRotate }
+                }
               >
-                <span className="h-2 w-2 rounded-full bg-[#ff6072] shadow-[0_0_10px_rgba(255,96,114,0.8)]" />
-                Rec
-                <span className="text-white/44">00:02:26:03</span>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 16, scale: 0.98 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.86, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto w-full max-w-[390px]"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[30px] border border-white/14 bg-[linear-gradient(165deg,rgba(13,17,28,0.9),rgba(8,11,18,0.84))] p-3 shadow-[0_22px_64px_rgba(0,0,0,0.46)]">
-                <div className="absolute inset-3 rounded-[22px] border border-white/18" />
                 <motion.div
-                  className="absolute left-1/2 top-1/2 h-[62%] w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/24"
-                  animate={shouldReduceMotion || !allowHeroMotion ? undefined : { rotate: [0, 360] }}
-                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.div
-                  className="absolute left-1/2 top-1/2 h-[48%] w-[48%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/16"
                   animate={
                     shouldReduceMotion || !allowHeroMotion
                       ? undefined
                       : {
-                          scale: [1, 1.04, 1],
-                          opacity: [0.5, 0.9, 0.5],
+                          y: [0, -3, 0],
+                          rotate: [0, 0.8, 0],
                         }
                   }
-                  transition={{ duration: 8.6, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                  className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-md border border-[#f2d4bf]/46 bg-[#f2d4bf]/12"
-                  animate={shouldReduceMotion || !allowHeroMotion ? undefined : { x: [0, 6, -4, 0], y: [0, -5, 3, 0] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                />
+                  transition={{ duration: 10.4, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative h-[96px] w-[236px] overflow-hidden rounded-[16px] bg-[linear-gradient(160deg,rgba(12,15,26,0.92),rgba(8,11,20,0.78))] shadow-[0_22px_52px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="absolute inset-x-0 top-0 z-10 h-[16px] bg-black/34" />
+                  <div className="absolute inset-x-0 bottom-0 z-10 h-[16px] bg-black/34" />
 
-                <div className="absolute inset-x-4 top-4 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-white/56">
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#ff6072]" />
-                    Rec
-                  </span>
-                  <span>24 fps</span>
-                </div>
+                  <div className="absolute inset-x-[14px] top-[4px] z-20 flex items-center justify-between">
+                    {Array.from({ length: 9 }).map((_, index) => (
+                      <span
+                        key={`top-hole-${index}`}
+                        className="h-[5px] w-[9px] rounded-[2px] bg-[#05070d]/88"
+                      />
+                    ))}
+                  </div>
+                  <div className="absolute inset-x-[14px] bottom-[4px] z-20 flex items-center justify-between">
+                    {Array.from({ length: 9 }).map((_, index) => (
+                      <span
+                        key={`bottom-hole-${index}`}
+                        className="h-[5px] w-[9px] rounded-[2px] bg-[#05070d]/88"
+                      />
+                    ))}
+                  </div>
 
-                <div className="absolute inset-x-4 bottom-4 grid auto-rows-[96px] grid-cols-2 gap-2">
-                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/30">
-                    <Image
-                      src="/members/nikita.png"
-                      alt="Кадр участника"
-                      fill
-                      sizes="(max-width: 1024px) 35vw, 180px"
-                      className="object-cover object-[50%_16%] opacity-[0.82]"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.36))]" />
+                  <div className="absolute inset-x-[14px] inset-y-[18px] grid grid-cols-3 gap-1.5">
+                    <div className="relative overflow-hidden rounded-md">
+                      <Image
+                        src="/members/varya.png"
+                        alt="Пленочный кадр"
+                        fill
+                        sizes="110px"
+                        className="object-cover object-[50%_16%] grayscale-[12%]"
+                      />
+                    </div>
+                    <div className="relative overflow-hidden rounded-md">
+                      <Image
+                        src="/members/nikita.png"
+                        alt="Пленочный кадр"
+                        fill
+                        sizes="110px"
+                        className="object-cover object-[50%_12%] grayscale-[30%]"
+                      />
+                    </div>
+                    <div className="flex items-end rounded-md bg-white/[0.06] p-1.5">
+                      <p className="text-[7px] uppercase tracking-[0.16em] text-white/56">frame 27</p>
+                    </div>
                   </div>
-                  <div className="flex flex-col justify-between rounded-lg border border-white/14 bg-white/[0.04] p-2.5">
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-white/54">Scene 03</p>
-                    <p className="font-display text-lg leading-none text-white/86">light study</p>
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-white/46">memory frame</p>
-                  </div>
-                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/28">
-                    <Image
-                      src="/members/sonya-m.png"
-                      alt="Кадр участника"
-                      fill
-                      sizes="(max-width: 1024px) 35vw, 180px"
-                      className="object-cover object-[50%_14%] opacity-70 grayscale-[18%]"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(130deg,rgba(255,222,173,0.12),rgba(66,101,170,0.16))]" />
-                    <p className="absolute bottom-2 left-2 text-[9px] uppercase tracking-[0.18em] text-white/68">contact sheet</p>
-                  </div>
-                  <div className="relative overflow-hidden rounded-lg border border-white/14 bg-black/26">
-                    <Image
-                      src="/members/varya.png"
-                      alt="Кадр участника"
-                      fill
-                      sizes="(max-width: 1024px) 35vw, 180px"
-                      className="object-cover object-[50%_16%] opacity-72 grayscale-[22%]"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(130deg,rgba(50,94,170,0.26),rgba(181,55,78,0.2))]" />
-                  </div>
-                </div>
-
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24)_74%,rgba(0,0,0,0.52)_100%)]" />
-              </div>
-            </motion.div>
-          </div>
-        </motion.article>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.9, delay: 0.6 }}
-          className="mt-10 flex items-center gap-4"
-        >
-          <motion.div
-            className="h-px w-16 bg-gradient-to-r from-[#d13d50] to-white/20"
-            animate={shouldReduceMotion || !allowHeroMotion ? undefined : { opacity: [0.45, 0.95, 0.45] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <p className="text-xs uppercase tracking-[0.3em] text-white/52">Прокрутите вниз</p>
-        </motion.div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

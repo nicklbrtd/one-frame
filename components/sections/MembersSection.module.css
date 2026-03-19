@@ -5,13 +5,14 @@
   isolation: isolate;
   overflow: hidden;
   border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background: linear-gradient(165deg, rgba(12, 14, 24, 0.96), rgba(7, 9, 17, 0.9));
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.42);
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s ease,
-    border-color 0.35s ease;
+    border-color 0.35s ease,
+    filter 0.35s ease;
 }
 
 .card::before {
@@ -38,9 +39,10 @@
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 30px 86px rgba(0, 0, 0, 0.52);
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 32px 86px rgba(0, 0, 0, 0.5);
+  filter: saturate(1.06);
 }
 
 .content {

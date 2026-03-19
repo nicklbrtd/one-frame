@@ -8,6 +8,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VariableProximity } from "@/components/ui/VariableProximity";
 import { copy } from "@/data/copy";
 
+const manifestoPoints = [
+  "Мы снимаем не только события, но и характер людей в моменте.",
+  "Мы учимся чувствовать свет, чтобы кадр был живым, а не формальным.",
+  "Мы работаем как команда, где каждый взгляд усиливает общий результат.",
+];
+
 export function AboutSection() {
   const [enableVariableProximity, setEnableVariableProximity] = useState(false);
 
@@ -23,39 +29,43 @@ export function AboutSection() {
   return (
     <SectionShell id="about" eyebrow="Манифест">
       <Reveal>
-        <SectionHeading title={copy.about.title} />
-        {enableVariableProximity ? (
-          <VariableProximity
-            label={copy.about.text}
-            fromFontVariationSettings="'wght' 320, 'opsz' 12"
-            toFontVariationSettings="'wght' 980, 'opsz' 96"
-            falloff="gaussian"
-            radius={360}
-            className="mt-5 block max-w-2xl text-base leading-relaxed text-white/72 sm:text-lg"
-          />
-        ) : (
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/72 sm:text-lg">{copy.about.text}</p>
-        )}
+        <SectionHeading title={copy.about.title} subtitle={copy.about.text} className="max-w-4xl" />
       </Reveal>
-      <Reveal delay={0.1} className="mt-10">
-        <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-[linear-gradient(160deg,rgba(12,14,24,0.9),rgba(8,10,18,0.82))] p-8 shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl sm:grid-cols-3">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(209,61,80,0.16),transparent_35%),radial-gradient(circle_at_82%_18%,rgba(45,91,162,0.16),transparent_38%)]" />
-          <div className="relative z-10 grid gap-6 sm:grid-cols-3">
-          {[
-            "сюда можно что-то вставить",
-            "сюда можно что-то вставить",
-            "сюда можно что-то вставить",
-            "сюда можно что-то вставить",
-            "сюда можно что-то вставить",
-            "сюда можно что-то вставить",
-          ].map((item, index) => (
-            <div
-              key={`${item}-${index}`}
-              className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.1] to-white/[0.02] px-4 py-5 text-sm uppercase tracking-[0.18em] text-white/72"
-            >
-              {item}
-            </div>
-          ))}
+
+      <Reveal delay={0.08} className="mt-10">
+        <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
+          <article className="relative pl-6 sm:pl-8">
+            <span className="absolute left-0 top-1 h-[88%] w-px bg-gradient-to-b from-[#d13d50] via-white/38 to-transparent" />
+
+            {enableVariableProximity ? (
+              <VariableProximity
+                label="Фотография и видео для нас — способ удерживать время и делать его человеческим: через лица, тишину, движение и свет."
+                fromFontVariationSettings="'wght' 360, 'opsz' 14"
+                toFontVariationSettings="'wght' 920, 'opsz' 88"
+                falloff="gaussian"
+                radius={360}
+                className="block max-w-2xl text-xl leading-relaxed text-white/82 sm:text-2xl"
+              />
+            ) : (
+              <p className="max-w-2xl text-xl leading-relaxed text-white/82 sm:text-2xl">
+                Фотография и видео для нас — способ удерживать время и делать его человеческим: через лица,
+                тишину, движение и свет.
+              </p>
+            )}
+
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/64 sm:text-base">
+              Мы строим общий визуальный язык, в котором важны не эффекты ради эффектов, а правда кадра,
+              настроение и уважение к человеку перед камерой.
+            </p>
+          </article>
+
+          <div className="space-y-5">
+            {manifestoPoints.map((point) => (
+              <div key={point} className="flex gap-3">
+                <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#d13d50]/90 shadow-[0_0_14px_rgba(209,61,80,0.65)]" />
+                <p className="text-base leading-relaxed text-white/72">{point}</p>
+              </div>
+            ))}
           </div>
         </div>
       </Reveal>

@@ -22,7 +22,12 @@ const fontVariableProximity = Roboto_Flex({
 
 export const metadata: Metadata = {
   title: "ПДИВ",
-  description: "Это сайт короче я хз",
+  description: "Cinematic portfolio site of the LNOF photo and video group.",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({

@@ -45,8 +45,8 @@ export default function Home() {
       />
 
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-20">
-        <ThreadsBackground amplitude={1} distance={0} enableMouseInteraction />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_14%,rgba(209,61,80,0.18),transparent_42%),radial-gradient(circle_at_82%_16%,rgba(45,91,162,0.2),transparent_46%),linear-gradient(180deg,rgba(0,0,0,0.34),rgba(0,0,0,0.52))]" />
+        <ThreadsBackground amplitude={1} distance={0.08} enableMouseInteraction />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_12%,rgba(209,61,80,0.16),transparent_44%),radial-gradient(circle_at_84%_14%,rgba(58,100,176,0.16),transparent_48%),linear-gradient(180deg,rgba(0,0,0,0.3),rgba(0,0,0,0.5))]" />
       </div>
 
       <HeroSection />

@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #06070d;
-  --foreground: #f4f6fb;
-  --mist: #10131d;
-  --panel: rgba(13, 15, 24, 0.72);
-  --panel-strong: rgba(14, 17, 28, 0.92);
-  --line: rgba(228, 233, 255, 0.14);
+  --background: #06070c;
+  --foreground: #eef3ff;
+  --mist: #10121b;
+  --panel: rgba(15, 17, 26, 0.7);
+  --panel-strong: rgba(13, 15, 24, 0.9);
+  --line: rgba(228, 235, 255, 0.12);
   --accent: #d13d50;
-  --accent-alt: #1e3f77;
-  --accent-quiet: #5f1221;
-  --light-ice: #b8ccef;
+  --accent-alt: #2d5397;
+  --accent-quiet: #6c1528;
+  --light-ice: #c8d7f2;
 }
 
 @theme inline {
@@ -37,10 +37,10 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(120% 120% at 14% 12%, rgba(170, 38, 54, 0.28), transparent 42%),
-    radial-gradient(98% 96% at 82% 10%, rgba(32, 76, 142, 0.28), transparent 44%),
-    radial-gradient(85% 95% at 50% 86%, rgba(13, 16, 30, 0.78), transparent 70%),
-    linear-gradient(180deg, #06070d 0%, #090a12 38%, #06070d 100%);
+    radial-gradient(130% 128% at 14% 12%, rgba(170, 39, 56, 0.3), transparent 44%),
+    radial-gradient(104% 104% at 84% 12%, rgba(40, 80, 150, 0.28), transparent 47%),
+    radial-gradient(82% 92% at 50% 86%, rgba(12, 15, 28, 0.7), transparent 72%),
+    linear-gradient(180deg, #06070c 0%, #080910 36%, #06070c 100%);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
   text-rendering: optimizeLegibility;
@@ -58,12 +58,12 @@ body::before {
   pointer-events: none;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(5, 6, 10, 0.08), rgba(5, 6, 10, 0.34)),
-    radial-gradient(circle at 15% 14%, rgba(205, 56, 78, 0.24), transparent 28%),
-    radial-gradient(circle at 78% 18%, rgba(61, 104, 187, 0.2), transparent 32%),
-    radial-gradient(circle at 48% 74%, rgba(128, 25, 44, 0.16), transparent 38%);
+    linear-gradient(180deg, rgba(5, 6, 10, 0.06), rgba(5, 6, 10, 0.32)),
+    radial-gradient(circle at 14% 16%, rgba(205, 56, 78, 0.22), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(56, 100, 186, 0.2), transparent 34%),
+    radial-gradient(circle at 50% 78%, rgba(124, 23, 42, 0.17), transparent 40%);
   mix-blend-mode: screen;
-  opacity: 0.72;
+  opacity: 0.66;
 }
 
 body::after {
@@ -72,13 +72,13 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.2;
+  opacity: 0.14;
   background-image:
-    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.18) 0.8px, transparent 1px),
-    radial-gradient(circle at 72% 66%, rgba(255, 255, 255, 0.14) 0.8px, transparent 1px);
-  background-size: 8px 8px, 10px 10px;
+    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.2) 0.7px, transparent 0.9px),
+    radial-gradient(circle at 72% 66%, rgba(255, 255, 255, 0.16) 0.7px, transparent 0.9px);
+  background-size: 7px 7px, 9px 9px;
   mask-image:
-    radial-gradient(circle at center, black 35%, rgba(0, 0, 0, 0.72) 62%, transparent 95%);
+    radial-gradient(circle at center, black 34%, rgba(0, 0, 0, 0.72) 64%, transparent 96%);
 }
 
 main::before {
@@ -89,10 +89,10 @@ main::before {
   z-index: -5;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.32) 0%,
-    rgba(0, 0, 0, 0.02) 24%,
-    rgba(0, 0, 0, 0.26) 72%,
-    rgba(0, 0, 0, 0.5) 100%
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.05) 28%,
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.52) 100%
   );
 }
 
@@ -102,14 +102,14 @@ main::after {
   inset: 0;
   pointer-events: none;
   z-index: -4;
-  opacity: 0.13;
-  mix-blend-mode: soft-light;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
   background-image: repeating-linear-gradient(
     0deg,
-    rgba(255, 255, 255, 0.28) 0px,
-    rgba(255, 255, 255, 0.28) 1px,
+    rgba(255, 255, 255, 0.32) 0px,
+    rgba(255, 255, 255, 0.32) 1px,
     transparent 1px,
-    transparent 3px
+    transparent 4px
   );
 }
 

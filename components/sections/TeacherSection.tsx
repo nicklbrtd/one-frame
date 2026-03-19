@@ -11,47 +11,59 @@ export function TeacherSection() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <SectionShell id="teacher" eyebrow="Наставник" className="py-16 sm:py-20">
+    <SectionShell id="teacher" eyebrow="Наставник" className="py-18 sm:py-22">
       <Reveal>
         <SectionHeading
-          title="Классный руководитель"
-          subtitle=""
+          title="Наставник Нашей Группы"
+          subtitle="Человек, который помогает нам видеть в кадре больше, чем просто изображение."
+          className="max-w-4xl"
         />
       </Reveal>
 
-      <Reveal delay={0.08} className="mt-8">
+      <Reveal delay={0.08} className="mt-10">
         <motion.article
-          className="relative overflow-hidden rounded-[30px] border border-white/12 bg-[linear-gradient(160deg,rgba(11,14,24,0.95),rgba(8,10,18,0.86))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.44)] backdrop-blur-xl sm:p-6"
+          className="relative overflow-hidden rounded-[34px] bg-[linear-gradient(154deg,rgba(14,16,24,0.86),rgba(10,12,20,0.56))] shadow-[0_34px_110px_rgba(0,0,0,0.5)]"
           whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[#c53c54]/30 blur-[74px]" />
-          <div className="pointer-events-none absolute -right-16 -bottom-20 h-56 w-56 rounded-full bg-[#3969b8]/24 blur-[78px]" />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.38)_85%)]" />
-
-          <div className="relative z-10 grid items-center gap-5 md:grid-cols-[220px,1fr]">
-            <div className="mx-auto w-full max-w-[240px] overflow-hidden rounded-[20px] border border-white/12 bg-white/8 shadow-[0_16px_40px_rgba(0,0,0,0.34)]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(215,123,88,0.2),transparent_36%),radial-gradient(circle_at_84%_20%,rgba(52,94,176,0.18),transparent_40%)]" />
+          <div className="relative z-10 grid md:grid-cols-[minmax(0,320px)_1fr]">
+            <div className="relative h-[22rem] md:h-full">
               <Image
                 src="/members/alla.png"
-                alt="Преподаватель"
-                width={640}
-                height={640}
-                className="h-full w-full object-cover object-top"
+                alt="Стрельцова Алла Владимировна"
+                fill
+                sizes="(max-width: 768px) 100vw, 360px"
+                className="object-cover object-top"
                 priority
               />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.26)_68%,rgba(0,0,0,0.58)_100%)]" />
+              <p className="absolute bottom-4 left-5 text-[10px] uppercase tracking-[0.22em] text-white/66">
+                Mentor Portrait
+              </p>
             </div>
 
-            <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-white/58">Преподаватель</p>
-              <h3 className="mt-3 font-display text-3xl leading-tight tracking-[0.02em] text-white sm:text-4xl">
-                Стрельцова Алла Владимировна
+            <div className="p-7 sm:p-10 md:p-12">
+              <p className="text-[11px] uppercase tracking-[0.24em] text-white/56">Классный руководитель</p>
+              <h3 className="mt-3 font-display text-4xl leading-[0.95] tracking-[0.02em] text-white sm:text-5xl">
+                Стрельцова
+                <br />
+                Алла Владимировна
               </h3>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/74">
-                сюда можно что-то вставить
+
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/76 sm:text-lg">
+                Благодаря ее поддержке мы не боимся искать собственный визуальный голос, работать с характером
+                и строить кадр с вниманием к деталям.
               </p>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/62">
-                сюда можно что-то вставить
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/62 sm:text-base">
+                Это спокойная, требовательная и вдохновляющая школа взгляда: где дисциплина кадра сочетается
+                с уважением к личности и творческой свободе.
               </p>
+
+              <div className="mt-8 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.24em] text-white/54">
+                <span className="h-px w-10 bg-gradient-to-r from-[#d13d50] to-white/20" />
+                guidance in light and frame
+              </div>
             </div>
           </div>
         </motion.article>

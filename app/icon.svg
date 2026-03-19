@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="62%">
+      <stop offset="0%" stop-color="#101522"/>
+      <stop offset="100%" stop-color="#04060b"/>
+    </radialGradient>
+    <linearGradient id="glowRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4f62" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ff4f62" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glowBlue" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#63a6ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#63a6ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="letter" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d8e7ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="256" height="256" rx="64" fill="url(#bg)"/>
+
+  <ellipse cx="74" cy="72" rx="72" ry="54" fill="url(#glowRed)"/>
+  <ellipse cx="188" cy="184" rx="74" ry="60" fill="url(#glowBlue)"/>
+
+  <rect x="54" y="48" width="32" height="160" rx="12" fill="#0b0e16" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+  <g fill="#0a0d14">
+    <rect x="64" y="62" width="12" height="11" rx="3"/>
+    <rect x="64" y="84" width="12" height="11" rx="3"/>
+    <rect x="64" y="106" width="12" height="11" rx="3"/>
+    <rect x="64" y="128" width="12" height="11" rx="3"/>
+    <rect x="64" y="150" width="12" height="11" rx="3"/>
+    <rect x="64" y="172" width="12" height="11" rx="3"/>
+  </g>
+
+  <path
+    d="M106 54h86l-13 20h-53v112h-20z"
+    fill="url(#letter)"
+  />
+
+  <rect x="93" y="48" width="108" height="160" rx="20" fill="none" stroke="rgba(255,255,255,0.34)" stroke-width="2.5"/>
+  <rect x="92" y="47" width="110" height="162" rx="21" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+</svg>

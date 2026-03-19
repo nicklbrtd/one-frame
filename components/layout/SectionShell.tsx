@@ -14,7 +14,7 @@ export function SectionShell({ id, eyebrow, className, children }: SectionShellP
     <section id={id} className={cn("relative scroll-mt-28 py-24 sm:py-32", className)}>
       <div className="mx-auto w-[min(1140px,92vw)]">
         {eyebrow ? (
-          <p className="mb-6 inline-flex rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-white/58 backdrop-blur-lg">
+          <p className="mb-6 text-[10px] uppercase tracking-[0.34em] text-white/52">
             {eyebrow}
           </p>
         ) : null}

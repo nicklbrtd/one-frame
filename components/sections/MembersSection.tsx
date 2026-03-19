@@ -141,7 +141,7 @@ export function MembersSection() {
           cardHeight: 348,
           rowGap: 20,
           desiredGap: 20,
-          speed: 60,
+          speed: 50,
           minHiddenRunEachSide: 420,
         }
       : {
@@ -149,7 +149,7 @@ export function MembersSection() {
           cardHeight: 172,
           rowGap: 12,
           desiredGap: 12,
-          speed: 42,
+          speed: 34,
           minHiddenRunEachSide: 220,
         };
 
@@ -259,13 +259,13 @@ export function MembersSection() {
       </Reveal>
 
       <div
-        className={`relative mt-12 overflow-hidden border border-white/12 bg-[linear-gradient(160deg,rgba(11,13,23,0.92),rgba(7,9,17,0.82))] shadow-[0_28px_96px_rgba(0,0,0,0.48)] backdrop-blur-xl ${
+        className={`relative mt-12 overflow-hidden bg-[linear-gradient(160deg,rgba(10,12,22,0.88),rgba(7,9,17,0.72))] shadow-[0_30px_96px_rgba(0,0,0,0.5)] backdrop-blur-xl ${
           isDesktopLayout ? "rounded-[30px] p-5" : "rounded-[26px] p-3"
         }`}
       >
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_16%,rgba(209,61,80,0.16),transparent_38%),radial-gradient(circle_at_84%_18%,rgba(45,91,162,0.16),transparent_40%)]" />
-        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060810] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
-        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060810] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_16%,rgba(209,61,80,0.14),transparent_38%),radial-gradient(circle_at_84%_18%,rgba(45,91,162,0.14),transparent_40%)]" />
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060710] via-[#060710cc] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060710] via-[#060710cc] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
 
         <div ref={stageRef} className={styles.loopStage}>
           {loopMembers.map((member, index) => (
