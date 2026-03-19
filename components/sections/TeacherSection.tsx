@@ -15,8 +15,8 @@ export function TeacherSection() {
     <SectionShell id="teacher" eyebrow="Глава 04" className="py-18 sm:py-22">
       <Reveal>
         <SectionHeading
-          title="Наставник Группы"
-          subtitle="Человек, который научил нас смотреть внимательнее, чувствовать глубже и не бояться живого кадра."
+          title="Наш куратор"
+          subtitle="Здравствуйте."
           className="max-w-4xl"
         />
       </Reveal>
