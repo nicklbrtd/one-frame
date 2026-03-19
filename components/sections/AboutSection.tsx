@@ -31,14 +31,16 @@ export function AboutSection() {
             toFontVariationSettings="'wght' 980, 'opsz' 96"
             falloff="gaussian"
             radius={360}
-            className="mt-5 block max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg"
+            className="mt-5 block max-w-2xl text-base leading-relaxed text-white/72 sm:text-lg"
           />
         ) : (
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg">{copy.about.text}</p>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/72 sm:text-lg">{copy.about.text}</p>
         )}
       </Reveal>
       <Reveal delay={0.1} className="mt-10">
-        <div className="grid gap-6 rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(12,18,28,0.88),rgba(8,12,18,0.74))] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:grid-cols-3">
+        <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-[linear-gradient(160deg,rgba(12,14,24,0.9),rgba(8,10,18,0.82))] p-8 shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl sm:grid-cols-3">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(209,61,80,0.16),transparent_35%),radial-gradient(circle_at_82%_18%,rgba(45,91,162,0.16),transparent_38%)]" />
+          <div className="relative z-10 grid gap-6 sm:grid-cols-3">
           {[
             "сюда можно что-то вставить",
             "сюда можно что-то вставить",
@@ -49,11 +51,12 @@ export function AboutSection() {
           ].map((item, index) => (
             <div
               key={`${item}-${index}`}
-              className="rounded-2xl border border-white/8 bg-gradient-to-b from-white/8 to-white/[0.03] px-4 py-5 text-sm uppercase tracking-[0.16em] text-white/64"
+              className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.1] to-white/[0.02] px-4 py-5 text-sm uppercase tracking-[0.18em] text-white/72"
             >
               {item}
             </div>
           ))}
+          </div>
         </div>
       </Reveal>
     </SectionShell>

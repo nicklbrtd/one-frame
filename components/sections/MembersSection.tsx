@@ -33,7 +33,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
         className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}
       >
         {member.isFormer ? (
-          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-black/28 px-2 py-1 text-[8px] uppercase tracking-[0.11em] text-white/76">
+          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-[#71192b]/45 px-2 py-1 text-[8px] uppercase tracking-[0.11em] text-white/84">
             Уже не с нами
           </p>
         ) : null}
@@ -48,11 +48,11 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
           )}
         </div>
 
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#05080ef0] via-[#05080e66] to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#070914f0] via-[#07091466] to-transparent" />
 
         <div className="relative z-10 flex h-full flex-col justify-end px-3 pb-3 pt-2">
-          <h3 className="truncate font-display text-[0.95rem] leading-none text-white">{member.name}</h3>
-          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-white/74">{member.description}</p>
+          <h3 className="truncate font-display text-[1rem] leading-none tracking-[0.02em] text-white">{member.name}</h3>
+          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-white/80">{member.description}</p>
         </div>
       </button>
     );
@@ -76,13 +76,13 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <div className={styles.scrim} />
       <div className={`${styles.content} flex h-full flex-col justify-end`}>
         {member.isFormer ? (
-          <p className="absolute right-3 top-3 rounded-full border border-white/25 bg-black/26 px-3 py-1 text-[10px] uppercase tracking-[0.13em] text-white/76">
+          <p className="absolute right-3 top-3 rounded-full border border-white/25 bg-[#71192b]/45 px-3 py-1 text-[10px] uppercase tracking-[0.13em] text-white/84">
             Уже не с нами
           </p>
         ) : null}
 
-        <h3 className="max-w-[86%] truncate font-display text-lg leading-none text-white">{member.name}</h3>
-        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-white/74">{member.description}</p>
+        <h3 className="max-w-[86%] truncate font-display text-xl leading-none tracking-[0.02em] text-white">{member.name}</h3>
+        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-white/80">{member.description}</p>
       </div>
     </button>
   );
@@ -259,12 +259,13 @@ export function MembersSection() {
       </Reveal>
 
       <div
-        className={`relative mt-12 overflow-hidden border border-white/10 bg-[linear-gradient(160deg,rgba(11,17,26,0.9),rgba(8,12,18,0.76))] shadow-[0_20px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl ${
+        className={`relative mt-12 overflow-hidden border border-white/12 bg-[linear-gradient(160deg,rgba(11,13,23,0.92),rgba(7,9,17,0.82))] shadow-[0_28px_96px_rgba(0,0,0,0.48)] backdrop-blur-xl ${
           isDesktopLayout ? "rounded-[30px] p-5" : "rounded-[26px] p-3"
         }`}
       >
-        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#06090f] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
-        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#06090f] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_16%,rgba(209,61,80,0.16),transparent_38%),radial-gradient(circle_at_84%_18%,rgba(45,91,162,0.16),transparent_40%)]" />
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060810] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060810] to-transparent ${isDesktopLayout ? "w-24" : "w-8"}`} />
 
         <div ref={stageRef} className={styles.loopStage}>
           {loopMembers.map((member, index) => (
@@ -285,7 +286,7 @@ export function MembersSection() {
       <AnimatePresence>
         {selectedMember ? (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/58 px-5 md:backdrop-blur-md"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/68 px-5 md:backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -296,11 +297,11 @@ export function MembersSection() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 22, scale: 0.97 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full max-w-xl rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(10,16,24,0.94),rgba(10,14,21,0.86))] p-8 shadow-[0_32px_100px_rgba(0,0,0,0.42)]"
+              className="w-full max-w-xl rounded-[30px] border border-white/12 bg-[linear-gradient(160deg,rgba(10,12,21,0.94),rgba(7,9,18,0.88))] p-8 shadow-[0_36px_110px_rgba(0,0,0,0.56)]"
               onClick={(event) => event.stopPropagation()}
             >
-              <p className="text-xs uppercase tracking-[0.24em] text-white/42">Портрет участника</p>
-              <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border border-white/10 bg-white/8">
+              <p className="text-xs uppercase tracking-[0.24em] text-white/54">Портрет участника</p>
+              <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border border-white/12 bg-white/8 shadow-[0_12px_34px_rgba(0,0,0,0.34)]">
                 {selectedMember.photo ? (
                   <Image
                     src={selectedMember.photo}
@@ -315,8 +316,8 @@ export function MembersSection() {
                   </div>
                 )}
               </div>
-              <h3 className="mt-4 font-display text-5xl text-white">{selectedMember.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-white/64">{selectedMember.description}</p>
+              <h3 className="mt-4 font-display text-5xl tracking-[0.02em] text-white">{selectedMember.name}</h3>
+              <p className="mt-4 text-base leading-relaxed text-white/72">{selectedMember.description}</p>
 
               {selectedMember.isFormer ? (
                 <div className="mt-6 rounded-xl border border-rose-200/25 bg-rose-100/10 px-4 py-3 text-sm text-rose-100/80">
@@ -327,7 +328,7 @@ export function MembersSection() {
               <button
                 type="button"
                 onClick={() => setSelectedId(null)}
-                className="mt-7 rounded-full border border-white/10 px-5 py-2 text-xs uppercase tracking-[0.18em] text-white/64 transition hover:bg-white/8"
+                className="mt-7 rounded-full border border-white/14 bg-white/[0.03] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white/74 transition hover:bg-white/10"
               >
                 Закрыть
               </button>

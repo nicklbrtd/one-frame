@@ -56,8 +56,8 @@ export function ThreadsBackground({
       context.clearRect(0, 0, width, height);
       context.globalCompositeOperation = "lighter";
 
-      const lineCount = isLowMotion() ? 14 : 30;
-      const steps = isLowMotion() ? 18 : 30;
+      const lineCount = isLowMotion() ? 12 : 28;
+      const steps = isLowMotion() ? 16 : 28;
       const stepX = width / steps;
       const waveAmp = Math.min(height * 0.045, 34) * amplitude;
       const distBias = Math.max(-0.8, Math.min(0.8, distance));
@@ -67,8 +67,8 @@ export function ThreadsBackground({
       for (let i = 0; i < lineCount; i += 1) {
         const ratio = i / Math.max(1, lineCount - 1);
         const yBase = ratio * height + distBias * 26;
-        const hueShift = 290 + ratio * 120;
-        const alpha = isLowMotion() ? 0.08 : 0.14;
+        const hueShift = 218 + ratio * 138;
+        const alpha = isLowMotion() ? 0.06 : 0.1;
 
         context.beginPath();
         for (let s = 0; s <= steps; s += 1) {
@@ -84,8 +84,8 @@ export function ThreadsBackground({
             context.lineTo(x, y);
           }
         }
-        context.strokeStyle = `hsla(${hueShift}, 85%, 72%, ${alpha})`;
-        context.lineWidth = isLowMotion() ? 1 : 1.2;
+        context.strokeStyle = `hsla(${hueShift}, 82%, 70%, ${alpha})`;
+        context.lineWidth = isLowMotion() ? 1 : 1.1;
         context.stroke();
       }
     };

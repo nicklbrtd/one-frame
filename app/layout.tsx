@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Roboto_Flex, Sora } from "next/font/google";
+import { Manrope, Oswald, Roboto_Flex } from "next/font/google";
 
 import "./globals.css";
 
-const fontSans = Plus_Jakarta_Sans({
+const fontSans = Manrope({
   variable: "--font-manrope",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const fontDisplay = Sora({
+const fontDisplay = Oswald({
   variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const fontVariableProximity = Roboto_Flex({
