@@ -25,7 +25,7 @@
   --color-accent-quiet: var(--accent-quiet);
   --color-light-ice: var(--light-ice);
   --font-sans: var(--font-manrope);
-  --font-display: var(--font-cormorant);
+  --font-display: var(--font-oswald);
 }
 
 html {

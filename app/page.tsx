@@ -2,6 +2,7 @@ import { ThreadsBackground } from "@/components/backgrounds/ThreadsBackground";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { AtmosphereSection } from "@/components/sections/AtmosphereSection";
 import { FinaleSection } from "@/components/sections/FinaleSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { MembersSection } from "@/components/sections/MembersSection";
@@ -10,9 +11,10 @@ import { TeacherSection } from "@/components/sections/TeacherSection";
 const links = [
   { id: "home", label: "Начало" },
   { id: "about", label: "Кто мы" },
+  { id: "manifest", label: "Манифест" },
   { id: "teacher", label: "Преп." },
-  { id: "members", label: "Студенты" },
-  { id: "finale", label: "Концовка" },
+  { id: "members", label: "Состав" },
+  { id: "finale", label: "Финал" },
 ];
 
 export default function Home() {
@@ -30,6 +32,7 @@ export default function Home() {
 
       <HeroSection />
       <AboutSection />
+      <AtmosphereSection />
       <TeacherSection />
       <MembersSection />
       <FinaleSection />

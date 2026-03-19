@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { copy } from "@/data/copy";
 
-const tags = ["сцена 01", "кадр 27", "настроение", "REC", "архив"];
+const tags = ["сцена 01", "кадр 67", "настроение", "REC", "архив"];
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 export function HeroSection() {
@@ -224,7 +224,7 @@ export function HeroSection() {
                       />
                     </div>
                     <div className="flex items-end border border-[#f7f0df]/24 bg-[#17244a] p-1.5">
-                      <p className="text-[7px] uppercase tracking-[0.16em] text-[#f5e9cc]">кадр 27</p>
+                      <p className="text-[7px] uppercase tracking-[0.16em] text-[#f5e9cc]">кадр 67</p>
                     </div>
                   </div>
                 </motion.div>

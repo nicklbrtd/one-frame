@@ -30,7 +30,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <button type="button" onClick={onClick} className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}>
         {member.isFormer ? (
           <p className="absolute right-2 top-2 z-10 -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-2 py-1 text-[8px] uppercase tracking-[0.12em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
-            Уже не с нами
+            Часть истории
           </p>
         ) : null}
 
@@ -69,7 +69,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <div className={`${styles.content} flex h-full flex-col justify-end`}>
         {member.isFormer ? (
           <p className="absolute right-3 top-3 -rotate-[1.8deg] border border-[#f6efdc]/46 bg-[#6d2537]/86 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
-            Уже не с нами
+            Часть истории
           </p>
         ) : null}
 
@@ -231,13 +231,20 @@ export function MembersSection() {
   const cardMode: CardMode = isDesktopLayout ? "desktop" : "mobile";
 
   return (
-    <SectionShell id="members" eyebrow="Люди">
+    <SectionShell id="members" eyebrow="Глава 05">
       <Reveal>
         <SectionHeading title={copy.members.title} subtitle={copy.members.text} />
       </Reveal>
 
+      <Reveal delay={0.06} className="mt-6">
+        <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
+          <span className="border border-[#f6efdc]/44 bg-[#173061]/80 px-3 py-1 text-[#f8f1df]">верхняя лента: в кадре сейчас</span>
+          <span className="border border-[#f6efdc]/44 bg-[#6a2638]/80 px-3 py-1 text-[#fff3df]">нижняя лента: часть нашей истории</span>
+        </div>
+      </Reveal>
+
       <div
-        className={`relative mt-12 overflow-hidden border-2 border-[#f6efdc]/26 bg-[linear-gradient(160deg,rgba(12,16,30,0.9),rgba(9,12,22,0.78))] shadow-[7px_8px_0_rgba(7,9,18,0.48)] ${
+        className={`relative mt-8 overflow-hidden border-2 border-[#f6efdc]/26 bg-[linear-gradient(160deg,rgba(12,16,30,0.9),rgba(9,12,22,0.78))] shadow-[7px_8px_0_rgba(7,9,18,0.48)] ${
           isDesktopLayout ? "rounded-[30px] p-5" : "rounded-[26px] p-3"
         }`}
       >
@@ -302,7 +309,7 @@ export function MembersSection() {
 
               {selectedMember.isFormer ? (
                 <div className="mt-6 inline-flex -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-3 py-2 text-sm uppercase tracking-[0.14em] text-[#fff3df]">
-                  Уже не с нами
+                  Часть нашей истории
                 </div>
               ) : null}
 

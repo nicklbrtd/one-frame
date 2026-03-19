@@ -11,11 +11,11 @@ export function TeacherSection() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <SectionShell id="teacher" eyebrow="Наставник" className="py-18 sm:py-22">
+    <SectionShell id="teacher" eyebrow="Глава 04" className="py-18 sm:py-22">
       <Reveal>
         <SectionHeading
-          title="Наставник Нашей Группы"
-          subtitle="Человек, который помогает нам видеть в кадре больше и чувствовать историю глубже."
+          title="Наставник Группы"
+          subtitle="Человек, который научил нас смотреть внимательнее, чувствовать глубже и не бояться живого кадра."
           className="max-w-4xl"
         />
       </Reveal>
@@ -39,7 +39,7 @@ export function TeacherSection() {
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.26)_68%,rgba(0,0,0,0.58)_100%)]" />
               <p className="absolute bottom-4 left-4 -rotate-[2deg] border border-[#f6efdc]/56 bg-[#f2e4c6]/90 px-2 py-1 text-[9px] uppercase tracking-[0.15em] text-[#1f2230]">
-                mentor spotlight
+                наставник
               </p>
             </div>
 
@@ -54,18 +54,18 @@ export function TeacherSection() {
               </h3>
 
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#f7f0dd]/78 sm:text-lg">
-                Благодаря ее поддержке мы не боимся экспериментировать, искать свой стиль и делать кадр живым,
-                а не шаблонным.
+                Благодаря ее поддержке мы не боимся экспериментов, ищем свой визуальный голос и учимся
+                снимать честно, а не шаблонно.
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#f7f0dc]/64 sm:text-base">
-                Это место, где дисциплина и творчество работают вместе: от идеи и раскадровки до финальной
-                монтажной точки.
+                Это пространство, где дисциплина и свобода работают вместе: от первой идеи и раскадровки
+                до финальной монтажной точки.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
-                <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">frame guidance</span>
-                <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">light direction</span>
-                <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">story feedback</span>
+                <span className="border border-[#f6efdc]/42 bg-[#692537]/78 px-2 py-1 text-[#f8f1df]">ведет кадр</span>
+                <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">чувствует свет</span>
+                <span className="border border-[#f6efdc]/42 bg-[#2d234f]/78 px-2 py-1 text-[#f8f1df]">собирает историю</span>
               </div>
             </div>
           </div>

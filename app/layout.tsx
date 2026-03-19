@@ -10,7 +10,7 @@ const fontSans = Manrope({
 });
 
 const fontDisplay = Oswald({
-  variable: "--font-cormorant",
+  variable: "--font-oswald",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600", "700"],
 });
@@ -22,7 +22,7 @@ const fontVariableProximity = Roboto_Flex({
 
 export const metadata: Metadata = {
   title: "ПДИВ",
-  description: "Cinematic portfolio site of the LNOF photo and video group.",
+  description: "Иллюстрированный сайт группы LNOF о фото, видео, свете и общей истории.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",

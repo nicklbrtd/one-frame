@@ -28,6 +28,7 @@ export function FloatingNav({ links }: FloatingNavProps) {
     const found = links.findIndex((link) => link.id === currentHash);
     return found >= 0 ? found : 0;
   });
+  const [isCompact, setIsCompact] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const manualLockRef = useRef(false);
@@ -116,11 +117,52 @@ export function FloatingNav({ links }: FloatingNavProps) {
     };
   }, [ids]);
 
+  useEffect(() => {
+    let rafId = 0;
+    let previousY = window.scrollY;
+    let ticking = false;
+
+    const updateState = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - previousY;
+
+      if (Math.abs(delta) > 6) {
+        if (delta > 0 && currentY > 72) {
+          setIsCompact(true);
+        } else if (delta < 0) {
+          setIsCompact(false);
+        }
+      }
+
+      if (currentY < 20) {
+        setIsCompact(false);
+      }
+
+      previousY = currentY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      rafId = window.requestAnimationFrame(updateState);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
+  }, []);
+
   return (
-    <div className={styles.container} ref={containerRef}>
-      <div className={styles.navWrap}>
+    <div className={cn(styles.container, isCompact && styles.containerCompact)} ref={containerRef}>
+      <div className={cn(styles.navWrap, isCompact && styles.navWrapCompact)}>
         <nav className={styles.nav} aria-label="Основные разделы">
-          <ul className={styles.list}>
+          <ul className={cn(styles.list, isCompact && styles.listCompact)}>
             {links.map((item, index) => {
               const isActive = activeIndex === index;
 
@@ -129,7 +171,7 @@ export function FloatingNav({ links }: FloatingNavProps) {
                   <a
                     href={`#${item.id}`}
                     onClick={(event) => handleAnchorClick(event, index)}
-                    className={styles.link}
+                    className={cn(styles.link, isCompact && styles.linkCompact)}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {item.label}
