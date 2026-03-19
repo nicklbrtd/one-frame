@@ -4,6 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
+import { DoodleArrow, DoodleCross } from "@/components/ui/Doodles";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { copy } from "@/data/copy";
@@ -48,6 +49,18 @@ export function AtmosphereSection() {
         >
           <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(circle,rgba(247,239,220,0.9)_0.8px,transparent_1px)] [background-size:8px_8px]" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_26%,rgba(229,66,93,0.24),transparent_42%),radial-gradient(circle_at_84%_24%,rgba(60,110,225,0.24),transparent_44%),radial-gradient(circle_at_52%_78%,rgba(245,212,138,0.16),transparent_40%)]" />
+          <DoodleArrow
+            className="pointer-events-none absolute left-[6%] top-[8%] hidden h-14 w-36 rotate-[-10deg] lg:block"
+            color="rgba(244, 233, 206, 0.66)"
+            delay={0.24}
+            duration={1.04}
+          />
+          <DoodleCross
+            className="pointer-events-none absolute right-[8%] top-[14%] hidden h-7 w-7 lg:block"
+            color="rgba(233, 225, 204, 0.54)"
+            delay={0.52}
+            duration={0.64}
+          />
 
           <motion.div
             aria-hidden

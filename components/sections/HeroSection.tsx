@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+import { DoodleArrow, DoodleCircle, DoodleStar, DoodleUnderline } from "@/components/ui/Doodles";
 import { copy } from "@/data/copy";
 
 const tags = ["сцена 3", "кадр 67", "Седых", "REC", "Лебедев??"];
@@ -100,9 +101,17 @@ export function HeroSection() {
                 {copy.hero.title}
               </h1>
 
-              <p className="mt-5 max-w-xl border-l-4 border-[#f5e7c9]/78 pl-4 text-balance text-lg leading-relaxed text-[#f5efdd] sm:text-[1.2rem]">
-                {copy.hero.subtitle}
-              </p>
+              <div className="relative mt-5 max-w-xl">
+                <p className="border-l-4 border-[#f5e7c9]/78 pl-4 text-balance text-lg leading-relaxed text-[#f5efdd] sm:text-[1.2rem]">
+                  {copy.hero.subtitle}
+                </p>
+                <DoodleUnderline
+                  className="pointer-events-none absolute -bottom-5 left-4 h-8 w-44"
+                  color="rgba(245, 234, 206, 0.9)"
+                  delay={0.38}
+                  duration={1.05}
+                />
+              </div>
 
               <ul className="mt-7 flex flex-wrap gap-2">
                 {tags.map((tag, index) => (
@@ -118,6 +127,12 @@ export function HeroSection() {
                   </li>
                 ))}
               </ul>
+              <DoodleStar
+                className="pointer-events-none absolute -right-2 top-[61%] hidden h-8 w-8 md:block"
+                color="rgba(238, 227, 199, 0.72)"
+                delay={0.52}
+                duration={0.68}
+              />
 
             </div>
           </RevealBlock>
@@ -129,6 +144,18 @@ export function HeroSection() {
             className="relative mx-auto w-full max-w-[560px]"
             style={shouldReduceMotion ? undefined : { x: collageX, y: collageY }}
           >
+            <DoodleArrow
+              className="pointer-events-none absolute -left-8 top-8 z-20 hidden h-16 w-40 -rotate-[8deg] lg:block"
+              color="rgba(245, 235, 212, 0.76)"
+              delay={0.34}
+              duration={1.08}
+            />
+            <DoodleCircle
+              className="pointer-events-none absolute right-[0%] top-[8%] z-20 hidden h-36 w-36 lg:block"
+              color="rgba(223, 233, 248, 0.58)"
+              delay={0.5}
+              duration={1.15}
+            />
             <div className="relative h-[28rem] sm:h-[32rem]">
               <article className="absolute left-[4%] top-[2%] h-[78%] w-[72%] rotate-[-2deg] overflow-hidden border-2 border-[#f6efdb]/55 bg-[#121a32] shadow-[8px_10px_0_rgba(6,8,16,0.5)]">
                 <Image

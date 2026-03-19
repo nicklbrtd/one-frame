@@ -3,170 +3,264 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
-import { cn } from "@/lib/cn";
-
 import styles from "./ScrollSteps.module.css";
 
-const STEP_COUNT = 11;
-const IDLE_DELAY_MS = 1300;
-
-type StepState = {
-  opacity: number;
-  scale: number;
-  passed: boolean;
-  active: boolean;
+type Step = {
+  id: number;
+  side: -1 | 1;
+  yRatio: number;
+  xOffset: number;
+  angle: number;
+  size: number;
+  baseOpacity: number;
+  phase: number;
 };
 
+const STEP_COUNT = 64;
+const TRAIL_LENGTH = 14;
+const IDLE_DELAY_MS = 1200;
+const SIDE_BAND = 18;
+
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+const lerp = (from: number, to: number, t: number) => from + (to - from) * t;
+
+const seeded = (input: number) => {
+  const value = Math.sin(input * 127.1 + 311.7) * 43758.5453123;
+  return value - Math.floor(value);
+};
+
+const buildSteps = (): Step[] => {
+  const steps: Step[] = [];
+  let drift = 0;
+
+  for (let i = 0; i < STEP_COUNT; i += 1) {
+    const side: -1 | 1 = i % 2 === 0 ? -1 : 1;
+    const yRatio = i / (STEP_COUNT - 1);
+    const driftJitter = (seeded(i + 9) - 0.5) * 2.8;
+
+    drift = clamp(drift + driftJitter, -8, 8);
+
+    steps.push({
+      id: i,
+      side,
+      yRatio,
+      xOffset: side * (SIDE_BAND + seeded(i + 21) * 5.4) + drift,
+      angle: side * (10 + seeded(i + 33) * 10) + (seeded(i + 45) - 0.5) * 3,
+      size: 0.86 + seeded(i + 57) * 0.26,
+      baseOpacity: 0.68 + seeded(i + 69) * 0.22,
+      phase: seeded(i + 81) * Math.PI * 2,
+    });
+  }
+
+  return steps;
+};
+
+function drawFootprint(
+  ctx: CanvasRenderingContext2D,
+  step: Step,
+  x: number,
+  y: number,
+  strength: number,
+  idle: boolean,
+  time: number,
+) {
+  const pulse = idle ? 0.92 + Math.sin(time * 0.0017 + step.phase) * 0.08 : 1;
+  const opacity = clamp(strength * step.baseOpacity * pulse, 0, 1);
+  const width = 14 * step.size;
+  const height = 28 * step.size;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((step.angle * Math.PI) / 180);
+  ctx.scale(step.side, 1);
+
+  const bodyGradient = ctx.createRadialGradient(0, 5, 1, 0, 2, height * 0.8);
+  bodyGradient.addColorStop(0, `rgba(175, 190, 218, ${0.24 * opacity})`);
+  bodyGradient.addColorStop(0.58, `rgba(128, 144, 176, ${0.2 * opacity})`);
+  bodyGradient.addColorStop(1, `rgba(94, 106, 132, ${0})`);
+
+  ctx.fillStyle = bodyGradient;
+  ctx.beginPath();
+  ctx.ellipse(0, 8, width * 0.54, height * 0.42, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.ellipse(0, -2, width * 0.42, height * 0.3, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  const toeColor = `rgba(182, 198, 225, ${0.18 * opacity})`;
+  ctx.fillStyle = toeColor;
+  const toes = [
+    { x: -4.2, y: -15, r: 2.2 },
+    { x: -1.2, y: -16.4, r: 2.05 },
+    { x: 1.9, y: -16.2, r: 1.95 },
+    { x: 4.5, y: -14.6, r: 1.7 },
+  ];
+
+  toes.forEach((toe) => {
+    ctx.beginPath();
+    ctx.arc(toe.x * step.size, toe.y * step.size, toe.r * step.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.restore();
+}
 
 export function ScrollSteps() {
   const shouldReduceMotion = useReducedMotion();
-  const [progress, setProgress] = useState(0.02);
-  const [isIdle, setIsIdle] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
-  const lastScrollY = useRef(0);
-  const rafId = useRef<number | null>(null);
-  const idleTimer = useRef<number | null>(null);
-  const ticking = useRef(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const rafRef = useRef<number | null>(null);
 
-  const steps = useMemo(() => Array.from({ length: STEP_COUNT }, (_, index) => index), []);
-  const activeIndex = Math.round(progress * (STEP_COUNT - 1));
+  const targetProgressRef = useRef(0);
+  const displayProgressRef = useRef(0);
+  const directionRef = useRef<1 | -1>(1);
+  const lastScrollYRef = useRef(0);
+  const lastActiveAtRef = useRef(0);
+
+  const steps = useMemo(() => buildSteps(), []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setIsDesktop(mediaQuery.matches);
+    const sync = () => setEnabled(mediaQuery.matches);
     sync();
     mediaQuery.addEventListener("change", sync);
     return () => mediaQuery.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
-    lastScrollY.current = window.scrollY;
-
-    const scheduleIdle = () => {
-      if (idleTimer.current !== null) {
-        window.clearTimeout(idleTimer.current);
+    if (!enabled) {
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
-      idleTimer.current = window.setTimeout(() => {
-        setIsIdle(true);
-      }, IDLE_DELAY_MS);
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    const getProgress = () => {
+      const doc = document.documentElement;
+      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
+      return clamp(window.scrollY / maxScroll, 0, 1);
     };
 
-    const handleFrame = () => {
-      const currentY = window.scrollY;
-      const delta = currentY - lastScrollY.current;
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
 
-      if (Math.abs(delta) > 1) {
-        setIsIdle(false);
+    const draw = (time: number) => {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
 
-        if (delta > 0) {
-          setProgress((prev) => clamp(prev + Math.min(delta, 140) * 0.001, 0, 1));
-        } else {
-          setProgress((prev) => clamp(prev - Math.min(Math.abs(delta), 140) * 0.0012, 0, 1));
+      const isIdle = time - lastActiveAtRef.current > IDLE_DELAY_MS;
+
+      const target = targetProgressRef.current;
+      const current = displayProgressRef.current;
+      const smoothing = shouldReduceMotion ? 1 : 0.16;
+      const next = lerp(current, target, smoothing);
+      displayProgressRef.current = next;
+
+      const cursor = next * (steps.length - 1);
+
+      ctx.clearRect(0, 0, width, height);
+
+      const mist = ctx.createLinearGradient(0, 0, 0, height);
+      mist.addColorStop(0, "rgba(198, 206, 222, 0.02)");
+      mist.addColorStop(0.5, "rgba(155, 168, 198, 0.035)");
+      mist.addColorStop(1, "rgba(122, 136, 166, 0.02)");
+      ctx.fillStyle = mist;
+      ctx.fillRect(0, 0, width, height);
+
+      const centerX = width * 0.5;
+
+      for (let i = 0; i < steps.length; i += 1) {
+        const step = steps[i];
+        const delta = cursor - i;
+
+        let strength = 0;
+
+        if (delta >= -0.5 && delta < 0.15) {
+          strength = ((delta + 0.5) / 0.65) * 0.7;
+        } else if (delta >= 0.15) {
+          strength = 1 - (delta - 0.15) / TRAIL_LENGTH;
         }
 
-        scheduleIdle();
+        strength = clamp(strength, 0, 1);
+        if (strength <= 0.012) continue;
+
+        const active = Math.abs(delta) <= 0.62;
+        const y = step.yRatio * height;
+
+        let x = centerX + step.xOffset;
+        let angleInfluence = 0;
+
+        if (active) {
+          x += directionRef.current * 0.9;
+          angleInfluence = directionRef.current * 1.7;
+        }
+
+        if (isIdle && !shouldReduceMotion && Math.abs(delta) < 2.2) {
+          x += Math.sin(time * 0.0011 + step.phase) * 0.7;
+        }
+
+        const renderStep: Step = {
+          ...step,
+          angle: step.angle + angleInfluence,
+        };
+
+        drawFootprint(ctx, renderStep, x, y, strength, isIdle, time);
       }
 
-      if (currentY < 16) {
-        setProgress(0.02);
-        setIsIdle(false);
-      }
-
-      lastScrollY.current = currentY;
-      ticking.current = false;
+      rafRef.current = window.requestAnimationFrame(draw);
     };
 
     const onScroll = () => {
-      if (ticking.current) return;
-      ticking.current = true;
-      rafId.current = window.requestAnimationFrame(handleFrame);
+      const currentY = window.scrollY;
+      directionRef.current = currentY >= lastScrollYRef.current ? 1 : -1;
+      lastScrollYRef.current = currentY;
+
+      targetProgressRef.current = getProgress();
+      lastActiveAtRef.current = performance.now();
     };
 
-    scheduleIdle();
+    resize();
+    lastScrollYRef.current = window.scrollY;
+    targetProgressRef.current = getProgress();
+    displayProgressRef.current = targetProgressRef.current;
+    lastActiveAtRef.current = performance.now();
+
+    window.addEventListener("resize", resize);
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    rafRef.current = window.requestAnimationFrame(draw);
+
     return () => {
+      window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", onScroll);
-      if (rafId.current !== null) {
-        window.cancelAnimationFrame(rafId.current);
-      }
-      if (idleTimer.current !== null) {
-        window.clearTimeout(idleTimer.current);
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
     };
-  }, []);
+  }, [enabled, shouldReduceMotion, steps]);
 
-  if (!isDesktop) {
+  if (!enabled) {
     return null;
   }
 
-  const getStepState = (index: number): StepState => {
-    const passed = index <= activeIndex;
-    const active = index === activeIndex;
-    const distance = Math.abs(index - activeIndex);
-
-    if (!passed) {
-      return { opacity: 0.06, scale: 0.9, passed, active };
-    }
-
-    if (active) {
-      return { opacity: 0.94, scale: 1.06, passed, active };
-    }
-
-    return {
-      opacity: clamp(0.54 - distance * 0.085, 0.18, 0.6),
-      scale: clamp(1 - distance * 0.03, 0.88, 1),
-      passed,
-      active,
-    };
-  };
-
   return (
     <aside aria-hidden className={styles.container}>
-      <div className={styles.track} />
-
-      {steps.map((step) => {
-        const ratio = step / (STEP_COUNT - 1);
-        const state = getStepState(step);
-        const stepIdleNear = isIdle && !shouldReduceMotion && Math.abs(step - activeIndex) <= 1;
-
-        return (
-          <div
-            key={step}
-            className={cn(styles.step, step % 2 === 0 ? styles.stepLeft : styles.stepRight)}
-            style={{
-              top: `calc(${ratio * 100}% - 8px)`,
-              opacity: state.opacity,
-              transform: `scale(${state.scale})`,
-            }}
-          >
-            <span
-              className={cn(
-                styles.print,
-                styles.printMain,
-                state.passed && styles.printPassed,
-                state.active && styles.printActive,
-                stepIdleNear && styles.printIdle,
-              )}
-            />
-            <span
-              className={cn(
-                styles.print,
-                styles.printSecondary,
-                state.passed && styles.printPassed,
-                state.active && styles.printActive,
-                stepIdleNear && styles.printIdle,
-              )}
-            />
-          </div>
-        );
-      })}
-
-      <div className={styles.ghost} style={{ top: `calc(${progress * 100}% - 13px)` }}>
-        <span className={cn(styles.ghostCore, isIdle && !shouldReduceMotion && styles.ghostCoreOrbit)} />
-      </div>
+      <canvas ref={canvasRef} className={styles.canvas} />
     </aside>
   );
 }

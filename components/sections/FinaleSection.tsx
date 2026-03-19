@@ -1,4 +1,5 @@
 import { SectionShell } from "@/components/layout/SectionShell";
+import { DoodleStar, DoodleUnderline } from "@/components/ui/Doodles";
 import { Reveal } from "@/components/ui/Reveal";
 import { copy } from "@/data/copy";
 
@@ -15,12 +16,26 @@ export function FinaleSection() {
             финальный кадр
           </p>
 
-          <h2 className="relative mt-6 font-display text-balance text-6xl uppercase leading-[0.88] tracking-[0.04em] text-[#f7f1e3] [text-shadow:4px_4px_0_rgba(8,10,18,0.66)] sm:text-7xl lg:text-[6.5rem]">
-            {copy.finale.title}
-          </h2>
+          <div className="relative mx-auto mt-6 inline-block">
+            <h2 className="font-display text-balance text-6xl uppercase leading-[0.88] tracking-[0.04em] text-[#f7f1e3] [text-shadow:4px_4px_0_rgba(8,10,18,0.66)] sm:text-7xl lg:text-[6.5rem]">
+              {copy.finale.title}
+            </h2>
+            <DoodleUnderline
+              className="pointer-events-none absolute -bottom-5 left-[8%] h-8 w-[72%]"
+              color="rgba(243, 231, 204, 0.62)"
+              delay={0.34}
+              duration={1.05}
+            />
+          </div>
           <p className="relative mx-auto mt-7 max-w-3xl text-balance text-lg leading-relaxed text-[#f7f0dd]/76 sm:text-xl">
             {copy.finale.text}
           </p>
+          <DoodleStar
+            className="pointer-events-none absolute right-[12%] top-[32%] hidden h-9 w-9 md:block"
+            color="rgba(239, 228, 201, 0.52)"
+            delay={0.5}
+            duration={0.7}
+          />
 
           <div className="relative mt-12 flex flex-wrap items-center justify-center gap-2 text-[10px] uppercase tracking-[0.16em]">
             <span className="border border-[#f6efdc]/42 bg-[#173061]/78 px-2 py-1 text-[#f8f1df]">си кс</span>

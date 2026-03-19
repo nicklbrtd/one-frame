@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { SectionShell } from "@/components/layout/SectionShell";
+import { DoodleStar, DoodleUnderline } from "@/components/ui/Doodles";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VariableProximity } from "@/components/ui/VariableProximity";
@@ -42,20 +43,28 @@ export function AboutSection() {
               кто мы в этой истории
             </p>
 
-            {enableVariableProximity ? (
-              <VariableProximity
-                label="Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет."
-                fromFontVariationSettings="'wght' 450, 'opsz' 14"
-                toFontVariationSettings="'wght' 900, 'opsz' 80"
-                falloff="gaussian"
-                radius={330}
-                className="relative mt-5 block max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl"
+            <div className="relative">
+              {enableVariableProximity ? (
+                <VariableProximity
+                  label="Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет."
+                  fromFontVariationSettings="'wght' 450, 'opsz' 14"
+                  toFontVariationSettings="'wght' 900, 'opsz' 80"
+                  falloff="gaussian"
+                  radius={330}
+                  className="relative mt-5 block max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl"
+                />
+              ) : (
+                <p className="relative mt-5 max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl">
+                  Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет.
+                </p>
+              )}
+              <DoodleUnderline
+                className="pointer-events-none absolute -bottom-5 left-2 h-8 w-48"
+                color="rgba(244, 234, 210, 0.7)"
+                delay={0.34}
+                duration={1}
               />
-            ) : (
-              <p className="relative mt-5 max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl">
-                Мы не просто группа. Мы одна лента кадров, где у каждого есть свой голос и свой свет.
-              </p>
-            )}
+            </div>
 
             <p className="relative mt-5 max-w-xl text-sm leading-relaxed text-[#f7f0dc]/72 sm:text-base">
               Нам важны не идеальные позы, а живые эмоции, честные лица и чувство времени, которое остается
@@ -76,6 +85,12 @@ export function AboutSection() {
                 </li>
               ))}
             </ul>
+            <DoodleStar
+              className="pointer-events-none absolute right-5 top-6 hidden h-8 w-8 md:block"
+              color="rgba(236, 225, 198, 0.58)"
+              delay={0.5}
+              duration={0.7}
+            />
           </article>
 
           <div className="space-y-4">

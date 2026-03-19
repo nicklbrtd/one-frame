@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionShell } from "@/components/layout/SectionShell";
+import { DoodleCross, DoodleUnderline } from "@/components/ui/Doodles";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -44,14 +45,28 @@ export function TeacherSection() {
             </div>
 
             <div className="p-7 sm:p-10 md:p-12">
+              <DoodleCross
+                className="pointer-events-none absolute right-6 top-6 hidden h-8 w-8 md:block"
+                color="rgba(243, 232, 205, 0.55)"
+                delay={0.24}
+                duration={0.62}
+              />
               <p className="inline-flex -rotate-[1deg] border border-[#f6efdb]/42 bg-[#173061]/78 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-[#f7f0df]">
                 классный руководитель
               </p>
-              <h3 className="mt-4 font-display text-4xl uppercase leading-[0.92] tracking-[0.03em] text-[#f8f1e3] [text-shadow:3px_3px_0_rgba(8,10,18,0.64)] sm:text-5xl">
-                Стрельцова
-                <br />
-                Алла Владимировна
-              </h3>
+              <div className="relative mt-4 inline-block">
+                <h3 className="font-display text-4xl uppercase leading-[0.92] tracking-[0.03em] text-[#f8f1e3] [text-shadow:3px_3px_0_rgba(8,10,18,0.64)] sm:text-5xl">
+                  Стрельцова
+                  <br />
+                  Алла Владимировна
+                </h3>
+                <DoodleUnderline
+                  className="pointer-events-none absolute -bottom-5 left-1 h-8 w-44"
+                  color="rgba(244, 234, 211, 0.72)"
+                  delay={0.3}
+                  duration={1}
+                />
+              </div>
 
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#f7f0dd]/78 sm:text-lg">
                 Благодаря ее поддержке мы не боимся экспериментов, ищем свой визуальный голос и учимся
