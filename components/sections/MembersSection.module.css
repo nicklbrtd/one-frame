@@ -1,48 +1,46 @@
 .card {
-  --behind-glow-color: hsla(352, 72%, 58%, 0.55);
-  --inner-gradient: linear-gradient(155deg, hsla(352, 55%, 36%, 0.48) 0%, hsla(218, 58%, 44%, 0.26) 100%);
+  --behind-glow-color: hsla(349, 79%, 58%, 0.46);
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(165deg, rgba(12, 14, 24, 0.96), rgba(7, 9, 17, 0.9));
-  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.42);
+  border-radius: 24px;
+  border: 2px solid rgba(247, 239, 220, 0.28);
+  background: linear-gradient(155deg, rgba(17, 22, 41, 0.96), rgba(12, 16, 30, 0.9));
+  box-shadow: 6px 7px 0 rgba(7, 9, 18, 0.44);
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease,
-    border-color 0.35s ease,
-    filter 0.35s ease;
+    transform 0.24s cubic-bezier(0.2, 0.95, 0.35, 1),
+    box-shadow 0.24s ease,
+    border-color 0.24s ease,
+    filter 0.24s ease;
 }
 
 .card::before {
   content: "";
   position: absolute;
-  inset: -26%;
+  inset: -28%;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 24% 18%, var(--behind-glow-color), transparent 58%);
-  filter: blur(22px);
-  opacity: 0.5;
+  background: radial-gradient(circle at 22% 16%, var(--behind-glow-color), transparent 58%);
+  filter: blur(20px);
+  opacity: 0.42;
 }
 
 .card::after {
   content: "";
   position: absolute;
-  inset: 1px;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  border-radius: 27px;
-  background: var(--inner-gradient);
-  opacity: 0.58;
-  mix-blend-mode: screen;
+  opacity: 0.18;
+  background-image: radial-gradient(circle, rgba(247, 239, 220, 0.88) 0.7px, transparent 0.9px);
+  background-size: 8px 8px;
 }
 
 .card:hover {
-  transform: translateY(-6px) scale(1.01);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 32px 86px rgba(0, 0, 0, 0.5);
-  filter: saturate(1.06);
+  transform: translateY(-4px) rotate(-0.35deg);
+  border-color: rgba(247, 239, 220, 0.42);
+  box-shadow: 8px 9px 0 rgba(7, 9, 18, 0.52);
+  filter: saturate(1.05);
 }
 
 .content {
@@ -70,9 +68,9 @@
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(circle at 15% 16%, rgba(209, 61, 80, 0.16), transparent 40%),
-    radial-gradient(circle at 80% 16%, rgba(45, 91, 162, 0.16), transparent 38%),
-    linear-gradient(180deg, rgba(5, 7, 14, 0.1) 0%, rgba(5, 7, 14, 0.74) 76%, rgba(5, 7, 14, 0.93) 100%);
+    radial-gradient(circle at 18% 20%, rgba(229, 65, 92, 0.24), transparent 42%),
+    radial-gradient(circle at 80% 14%, rgba(56, 107, 218, 0.24), transparent 40%),
+    linear-gradient(180deg, rgba(7, 10, 18, 0.04) 0%, rgba(7, 10, 18, 0.72) 74%, rgba(7, 10, 18, 0.92) 100%);
 }
 
 .loopStage {
@@ -89,7 +87,7 @@
 
 @media (max-width: 768px) {
   .card {
-    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.36);
+    box-shadow: 4px 5px 0 rgba(7, 9, 18, 0.38);
   }
 
   .card:hover {
@@ -97,7 +95,7 @@
   }
 
   .card::before {
-    opacity: 0.38;
-    filter: blur(16px);
+    opacity: 0.32;
+    filter: blur(14px);
   }
 }

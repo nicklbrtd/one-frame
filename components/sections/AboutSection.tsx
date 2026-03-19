@@ -9,9 +9,9 @@ import { VariableProximity } from "@/components/ui/VariableProximity";
 import { copy } from "@/data/copy";
 
 const manifestoPoints = [
-  "Мы снимаем не только события, но и характер людей в моменте.",
-  "Мы учимся чувствовать свет, чтобы кадр был живым, а не формальным.",
-  "Мы работаем как команда, где каждый взгляд усиливает общий результат.",
+  "снимаем моменты так, чтобы в кадре оставались эмоции, а не только картинка",
+  "учимся работать со светом и движением как с языком истории",
+  "делаем проекты вместе: от идеи и раскадровки до финального монтажа",
 ];
 
 export function AboutSection() {
@@ -33,37 +33,47 @@ export function AboutSection() {
       </Reveal>
 
       <Reveal delay={0.08} className="mt-10">
-        <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
-          <article className="relative pl-6 sm:pl-8">
-            <span className="absolute left-0 top-1 h-[88%] w-px bg-gradient-to-b from-[#d13d50] via-white/38 to-transparent" />
+        <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
+          <article className="relative overflow-hidden border-2 border-[#f6efdb]/38 bg-[linear-gradient(145deg,rgba(20,28,52,0.8),rgba(15,19,36,0.68))] p-6 shadow-[6px_7px_0_rgba(7,9,18,0.48)] sm:p-8">
+            <div className="pointer-events-none absolute right-4 top-4 h-20 w-20 rotate-[12deg] border border-[#f7efdc]/36" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(circle,rgba(247,239,220,0.9)_0.7px,transparent_0.9px)] [background-size:8px_8px]" />
+
+            <p className="relative inline-flex -rotate-[2deg] border border-[#f7efdd]/54 bg-[#f2e4c5]/92 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#20232d]">
+              group manifesto
+            </p>
 
             {enableVariableProximity ? (
               <VariableProximity
-                label="Фотография и видео для нас — способ удерживать время и делать его человеческим: через лица, тишину, движение и свет."
-                fromFontVariationSettings="'wght' 360, 'opsz' 14"
-                toFontVariationSettings="'wght' 920, 'opsz' 88"
+                label="Фотография и видео для нас — это способ говорить о людях честно, ярко и по-настоящему живо."
+                fromFontVariationSettings="'wght' 420, 'opsz' 14"
+                toFontVariationSettings="'wght' 900, 'opsz' 80"
                 falloff="gaussian"
-                radius={360}
-                className="block max-w-2xl text-xl leading-relaxed text-white/82 sm:text-2xl"
+                radius={340}
+                className="relative mt-5 block max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl"
               />
             ) : (
-              <p className="max-w-2xl text-xl leading-relaxed text-white/82 sm:text-2xl">
-                Фотография и видео для нас — способ удерживать время и делать его человеческим: через лица,
-                тишину, движение и свет.
+              <p className="relative mt-5 max-w-2xl text-xl leading-relaxed text-[#f8f1df] sm:text-2xl">
+                Фотография и видео для нас — это способ говорить о людях честно, ярко и по-настоящему живо.
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/64 sm:text-base">
-              Мы строим общий визуальный язык, в котором важны не эффекты ради эффектов, а правда кадра,
-              настроение и уважение к человеку перед камерой.
+            <p className="relative mt-5 max-w-xl text-sm leading-relaxed text-[#f7f0dc]/68 sm:text-base">
+              Мы не хотим стерильных кадров. Нам важны характер, энергия и чувство времени, которое остается в
+              памяти после просмотра.
             </p>
           </article>
 
-          <div className="space-y-5">
-            {manifestoPoints.map((point) => (
-              <div key={point} className="flex gap-3">
-                <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#d13d50]/90 shadow-[0_0_14px_rgba(209,61,80,0.65)]" />
-                <p className="text-base leading-relaxed text-white/72">{point}</p>
+          <div className="space-y-4">
+            {manifestoPoints.map((point, index) => (
+              <div
+                key={point}
+                className={`relative border-2 p-4 text-sm uppercase leading-relaxed tracking-[0.08em] text-[#f8f1de] shadow-[4px_5px_0_rgba(7,9,18,0.46)] sm:text-[0.95rem] ${
+                  index % 2 === 0
+                    ? "-rotate-[1.2deg] border-[#f6efdc]/42 bg-[#172b57]/74"
+                    : "rotate-[1deg] border-[#f6efdc]/36 bg-[#682538]/74"
+                }`}
+              >
+                {point}
               </div>
             ))}
           </div>

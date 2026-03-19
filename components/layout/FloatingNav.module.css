@@ -15,10 +15,9 @@
   pointer-events: auto;
   max-width: 100%;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(165deg, rgba(11, 13, 22, 0.74), rgba(8, 10, 18, 0.52));
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.36);
-  backdrop-filter: blur(12px);
+  border: 2px solid rgba(247, 239, 220, 0.24);
+  background: linear-gradient(165deg, rgba(12, 16, 30, 0.82), rgba(9, 12, 22, 0.62));
+  box-shadow: 5px 6px 0 rgba(7, 9, 18, 0.42);
 }
 
 .nav {
@@ -60,7 +59,7 @@
   padding: 0.56em 0.96em;
   text-decoration: none;
   color: inherit;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -85,7 +84,7 @@
     rgba(109, 151, 236, 0.98) 50%,
     rgba(247, 250, 255, 0.97) 100%
   );
-  box-shadow: 0 0 18px rgba(109, 151, 236, 0.48);
+  box-shadow: 0 0 16px rgba(109, 151, 236, 0.48), 2px 3px 0 rgba(7, 9, 18, 0.36);
 }
 
 .itemActive {

@@ -27,13 +27,9 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
 
   if (!isDesktop) {
     return (
-      <button
-        type="button"
-        onClick={onClick}
-        className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}
-      >
+      <button type="button" onClick={onClick} className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}>
         {member.isFormer ? (
-          <p className="absolute right-2 top-2 z-10 rounded-full border border-white/25 bg-[#71192b]/45 px-2 py-1 text-[8px] uppercase tracking-[0.11em] text-white/84">
+          <p className="absolute right-2 top-2 z-10 -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-2 py-1 text-[8px] uppercase tracking-[0.12em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
             Уже не с нами
           </p>
         ) : null}
@@ -48,22 +44,18 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
           )}
         </div>
 
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#070914f0] via-[#07091466] to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#070914f0] via-[#0709147f] to-transparent" />
 
         <div className="relative z-10 flex h-full flex-col justify-end px-3 pb-3 pt-2">
-          <h3 className="truncate font-display text-[1rem] leading-none tracking-[0.02em] text-white">{member.name}</h3>
-          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-white/80">{member.description}</p>
+          <h3 className="truncate font-display text-[1rem] uppercase leading-none tracking-[0.04em] text-[#f8f1df]">{member.name}</h3>
+          <p className="mt-1 min-h-[2.1rem] line-clamp-2 text-[11px] leading-snug text-[#f7f0dd]/84">{member.description}</p>
         </div>
       </button>
     );
   }
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`${styles.card} h-[348px] w-full p-5 text-left`}
-    >
+    <button type="button" onClick={onClick} className={`${styles.card} h-[348px] w-full p-5 text-left`}>
       <div className={styles.media}>
         {hasPhoto ? (
           <Image src={member.photo ?? ""} alt={member.name} width={580} height={696} className={styles.mediaImage} />
@@ -76,13 +68,13 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <div className={styles.scrim} />
       <div className={`${styles.content} flex h-full flex-col justify-end`}>
         {member.isFormer ? (
-          <p className="absolute right-3 top-3 rounded-full border border-white/25 bg-[#71192b]/45 px-3 py-1 text-[10px] uppercase tracking-[0.13em] text-white/84">
+          <p className="absolute right-3 top-3 -rotate-[1.8deg] border border-[#f6efdc]/46 bg-[#6d2537]/86 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
             Уже не с нами
           </p>
         ) : null}
 
-        <h3 className="max-w-[86%] truncate font-display text-xl leading-none tracking-[0.02em] text-white">{member.name}</h3>
-        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-white/80">{member.description}</p>
+        <h3 className="max-w-[86%] truncate font-display text-xl uppercase leading-none tracking-[0.04em] text-[#f8f1df]">{member.name}</h3>
+        <p className="mt-2 min-h-[2.9rem] line-clamp-2 text-sm leading-relaxed text-[#f7f0dd]/84">{member.description}</p>
       </div>
     </button>
   );
@@ -93,35 +85,26 @@ export function MembersSection() {
   const [isDesktopLayout, setIsDesktopLayout] = useState(false);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const loopMembers = useMemo(() => {
     const activeSource = members.filter((member) => !member.isFormer);
     const activePriority = ["nikita", "maksim"];
-    const active: Member[] = [
+    const activeOrdered: Member[] = [
       ...activePriority
         .map((id) => activeSource.find((member) => member.id === id))
         .filter((member): member is Member => Boolean(member)),
       ...activeSource.filter((member) => !activePriority.includes(member.id)),
     ];
 
-    const former = members.filter((member) => member.isFormer);
-    if (former.length === 0 || active.length === 0) return members;
-
-    const buckets: Member[][] = active.map(() => []);
-    for (let index = 0; index < former.length; index += 1) {
-      buckets[index % buckets.length].push(former[index]);
+    const formerOrdered = members.filter((member) => member.isFormer);
+    if (activeOrdered.length === 0 || formerOrdered.length === 0) {
+      return members;
     }
 
-    const arranged: Member[] = [];
-    for (let index = 0; index < active.length; index += 1) {
-      arranged.push(active[index], ...buckets[index]);
-    }
-    return arranged;
+    return [...activeOrdered, ...formerOrdered];
   }, []);
 
-  const selectedMember = useMemo(
-    () => members.find((member) => member.id === selectedId) ?? null,
-    [selectedId],
-  );
+  const selectedMember = useMemo(() => members.find((member) => member.id === selectedId) ?? null, [selectedId]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
@@ -153,7 +136,6 @@ export function MembersSection() {
           minHiddenRunEachSide: 220,
         };
 
-    let stageWidth = stage.clientWidth;
     let animationFrame = 0;
     let previousTimestamp = 0;
     let offset = 0;
@@ -172,14 +154,11 @@ export function MembersSection() {
     };
 
     const recalculate = () => {
-      stageWidth = stage.clientWidth;
+      const stageWidth = stage.clientWidth;
       const visibleRun = Math.max(stageWidth - config.cardWidth, 1);
       const requiredPerimeter = loopMembers.length * (config.cardWidth + config.desiredGap);
       const minHorizontalForSpacing = requiredPerimeter / 2 - layout.verticalRun;
-      const horizontalRun = Math.max(
-        visibleRun + config.minHiddenRunEachSide * 2,
-        minHorizontalForSpacing,
-      );
+      const horizontalRun = Math.max(visibleRun + config.minHiddenRunEachSide * 2, minHorizontalForSpacing);
 
       const hiddenRunEachSide = (horizontalRun - visibleRun) / 2;
       layout.horizontalRun = horizontalRun;
@@ -190,7 +169,6 @@ export function MembersSection() {
       stage.style.height = `${layout.stageHeight}px`;
 
       if (!hasSeededOffset) {
-        // Start with the first card entering the right edge of the top lane.
         offset = hiddenRunEachSide;
         hasSeededOffset = true;
       }
@@ -259,13 +237,14 @@ export function MembersSection() {
       </Reveal>
 
       <div
-        className={`relative mt-12 overflow-hidden bg-[linear-gradient(160deg,rgba(10,12,22,0.88),rgba(7,9,17,0.72))] shadow-[0_30px_96px_rgba(0,0,0,0.5)] backdrop-blur-xl ${
+        className={`relative mt-12 overflow-hidden border-2 border-[#f6efdc]/26 bg-[linear-gradient(160deg,rgba(12,16,30,0.9),rgba(9,12,22,0.78))] shadow-[7px_8px_0_rgba(7,9,18,0.48)] ${
           isDesktopLayout ? "rounded-[30px] p-5" : "rounded-[26px] p-3"
         }`}
       >
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_16%,rgba(209,61,80,0.14),transparent_38%),radial-gradient(circle_at_84%_18%,rgba(45,91,162,0.14),transparent_40%)]" />
-        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060710] via-[#060710cc] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
-        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060710] via-[#060710cc] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_16%,rgba(229,65,92,0.18),transparent_38%),radial-gradient(circle_at_84%_18%,rgba(56,107,218,0.18),transparent_40%)]" />
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.15] [background-image:radial-gradient(circle,rgba(247,239,220,0.9)_0.7px,transparent_0.9px)] [background-size:8px_8px]" />
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-[#060710] via-[#060710d9] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-[#060710] via-[#060710d9] to-transparent ${isDesktopLayout ? "w-28" : "w-8"}`} />
 
         <div ref={stageRef} className={styles.loopStage}>
           {loopMembers.map((member, index) => (
@@ -286,7 +265,7 @@ export function MembersSection() {
       <AnimatePresence>
         {selectedMember ? (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/68 px-5 md:backdrop-blur-md"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 md:backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -296,12 +275,14 @@ export function MembersSection() {
               initial={{ opacity: 0, y: 24, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 22, scale: 0.97 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full max-w-xl rounded-[30px] border border-white/12 bg-[linear-gradient(160deg,rgba(10,12,21,0.94),rgba(7,9,18,0.88))] p-8 shadow-[0_36px_110px_rgba(0,0,0,0.56)]"
+              transition={{ duration: 0.34, ease: [0.2, 0.95, 0.35, 1] }}
+              className="w-full max-w-xl rounded-[30px] border-2 border-[#f6efdc]/36 bg-[linear-gradient(160deg,rgba(15,19,36,0.94),rgba(10,13,25,0.9))] p-8 shadow-[8px_9px_0_rgba(7,9,18,0.5)]"
               onClick={(event) => event.stopPropagation()}
             >
-              <p className="text-xs uppercase tracking-[0.24em] text-white/54">Портрет участника</p>
-              <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border border-white/12 bg-white/8 shadow-[0_12px_34px_rgba(0,0,0,0.34)]">
+              <p className="inline-flex -rotate-[1.4deg] border border-[#f6efdc]/48 bg-[#f2e4c6]/90 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-[#1f2230]">
+                Портрет участника
+              </p>
+              <div className="mt-4 h-48 w-48 overflow-hidden rounded-2xl border-2 border-[#f6efdc]/34 bg-white/8 shadow-[4px_5px_0_rgba(7,9,18,0.42)]">
                 {selectedMember.photo ? (
                   <Image
                     src={selectedMember.photo}
@@ -316,11 +297,11 @@ export function MembersSection() {
                   </div>
                 )}
               </div>
-              <h3 className="mt-4 font-display text-5xl tracking-[0.02em] text-white">{selectedMember.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-white/72">{selectedMember.description}</p>
+              <h3 className="mt-4 font-display text-5xl uppercase tracking-[0.03em] text-[#f8f1df]">{selectedMember.name}</h3>
+              <p className="mt-4 text-base leading-relaxed text-[#f7f0dd]/78">{selectedMember.description}</p>
 
               {selectedMember.isFormer ? (
-                <div className="mt-6 rounded-xl border border-rose-200/25 bg-rose-100/10 px-4 py-3 text-sm text-rose-100/80">
+                <div className="mt-6 inline-flex -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-3 py-2 text-sm uppercase tracking-[0.14em] text-[#fff3df]">
                   Уже не с нами
                 </div>
               ) : null}
@@ -328,7 +309,7 @@ export function MembersSection() {
               <button
                 type="button"
                 onClick={() => setSelectedId(null)}
-                className="mt-7 rounded-full border border-white/14 bg-white/[0.03] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white/74 transition hover:bg-white/10"
+                className="mt-7 border border-[#f6efdc]/48 bg-[#1a3365]/78 px-5 py-2 text-xs uppercase tracking-[0.2em] text-[#f8f1df] transition hover:bg-[#234281]"
               >
                 Закрыть
               </button>

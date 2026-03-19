@@ -79,7 +79,7 @@ export function ThreadsBackground({
       context.clearRect(0, 0, width, height);
       context.globalCompositeOperation = "lighter";
 
-      const glowCount = isLowMotion() ? 4 : 7;
+      const glowCount = isLowMotion() ? 4 : 6;
       for (let i = 0; i < glowCount; i += 1) {
         const ratio = i / Math.max(1, glowCount - 1);
         const x =
@@ -127,6 +127,18 @@ export function ThreadsBackground({
       context.fillStyle = beamB;
       context.fillRect(-width * 0.62, -height * 0.028, width * 1.24, height * 0.056);
       context.restore();
+
+      context.globalCompositeOperation = "overlay";
+      context.strokeStyle = "rgba(245, 236, 215, 0.08)";
+      context.lineWidth = 1;
+      const stripeCount = isLowMotion() ? 8 : 14;
+      for (let i = 0; i < stripeCount; i += 1) {
+        const y = height * (0.16 + i * 0.05) + Math.sin(t * 0.9 + i) * 8;
+        context.beginPath();
+        context.moveTo(-40, y);
+        context.lineTo(width + 40, y - 18);
+        context.stroke();
+      }
 
       context.globalCompositeOperation = "screen";
       for (let i = 0; i < dust.length; i += 1) {
