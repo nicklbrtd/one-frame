@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { copy } from "@/data/copy";
 
-const tags = ["scene 01", "frame 27", "mood", "rec", "archive"];
+const tags = ["сцена 01", "кадр 27", "настроение", "REC", "архив"];
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 export function HeroSection() {
@@ -126,7 +126,7 @@ export function HeroSection() {
                 className="mt-12 inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-[#f5efdd]/74"
               >
                 <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#f5efdd]/46">↓</span>
-                scroll to next frame
+                к следующему кадру
               </motion.div>
             </div>
           </RevealBlock>
@@ -151,10 +151,10 @@ export function HeroSection() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(229,63,91,0.3),transparent_40%),radial-gradient(circle_at_82%_18%,rgba(60,110,225,0.26),transparent_42%)]" />
                 <div className="absolute inset-0 opacity-[0.2] [background-image:radial-gradient(circle,rgba(247,239,220,0.9)_0.7px,transparent_0.9px)] [background-size:7px_7px]" />
                 <p className="absolute left-4 top-4 -rotate-[2deg] border border-[#f7f0df]/56 bg-[#f3e4c5]/90 px-2 py-1 text-[9px] uppercase tracking-[0.15em] text-[#20232c]">
-                  lead frame
+                  главный кадр
                 </p>
                 <p className="absolute bottom-4 left-4 font-display text-2xl uppercase tracking-[0.03em] text-[#f8f3e5] [text-shadow:2px_2px_0_rgba(8,10,18,0.62)]">
-                  character in focus
+                  в фокусе характер
                 </p>
               </article>
 
@@ -170,8 +170,8 @@ export function HeroSection() {
               </article>
 
               <article className="absolute right-[12%] bottom-[4%] h-[31%] w-[44%] rotate-[-3deg] border-2 border-[#f7f0dd]/46 bg-[#f2e4c6]/92 p-3 text-[#1f2230] shadow-[6px_7px_0_rgba(6,8,16,0.42)]">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">doodle note</p>
-                <p className="mt-2 font-display text-[1.65rem] uppercase leading-[0.9]">we shoot moments together</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#3e4156]">заметка</p>
+                <p className="mt-2 font-display text-[1.65rem] uppercase leading-[0.9]">снимаем не только кадры, но и время</p>
               </article>
 
               <motion.div
@@ -224,7 +224,7 @@ export function HeroSection() {
                       />
                     </div>
                     <div className="flex items-end border border-[#f7f0df]/24 bg-[#17244a] p-1.5">
-                      <p className="text-[7px] uppercase tracking-[0.16em] text-[#f5e9cc]">frame 27</p>
+                      <p className="text-[7px] uppercase tracking-[0.16em] text-[#f5e9cc]">кадр 27</p>
                     </div>
                   </div>
                 </motion.div>
