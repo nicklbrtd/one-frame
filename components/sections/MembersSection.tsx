@@ -31,7 +31,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <button type="button" onClick={onClick} className={`${styles.card} h-[172px] w-full overflow-hidden rounded-[20px] p-0 text-left`}>
         {member.isFormer ? (
           <p className="absolute right-2 top-2 z-10 -rotate-[1.8deg] border border-[#f6efdc]/48 bg-[#6d2537]/86 px-2 py-1 text-[8px] uppercase tracking-[0.12em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
-            Часть истории
+            не с нами
           </p>
         ) : null}
 
@@ -69,7 +69,7 @@ function MemberCard({ member, mode, onClick }: { member: Member; mode: CardMode;
       <div className={`${styles.content} flex h-full items-end`}>
         {member.isFormer ? (
           <p className="absolute right-3 top-3 -rotate-[1.8deg] border border-[#f6efdc]/46 bg-[#6d2537]/86 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[#fff3df] shadow-[2px_2px_0_rgba(7,9,18,0.44)]">
-            Часть истории
+            не с нами
           </p>
         ) : null}
 
