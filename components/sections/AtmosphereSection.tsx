@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { copy } from "@/data/copy";
 
-const pulseTags = ["свет", "ритм", "фокус", "вспышка", "кадр 03"];
+const pulseTags = ["4 пары", "чижмина", "камера", "3 фвт"];
 
 export function AtmosphereSection() {
   const stageRef = useRef<HTMLElement | null>(null);
