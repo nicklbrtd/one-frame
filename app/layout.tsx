@@ -22,7 +22,19 @@ const fontVariableProximity = Roboto_Flex({
 
 export const metadata: Metadata = {
   title: "ПДИВ",
-  description: "Иллюстрированный сайт группы LNOF о фото, видео, свете и общей истории.",
+  description: "группа 3ФВТ карочи",
+  openGraph: {
+    title: "ПДИВ",
+    description: "группа 3ФВТ карочи",
+    siteName: "ПДИВ",
+    type: "website",
+    locale: "ru_RU",
+  },
+  twitter: {
+    card: "summary",
+    title: "ПДИВ",
+    description: "группа 3ФВТ карочи",
+  },
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
